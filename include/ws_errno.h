@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+*  Copyright (c) 2012-2021, The Linux Foundation. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are
@@ -87,11 +87,12 @@ typedef enum {
      WS_ERR_UNKNOWN_CA_CERTIFICATE                       = ( 31), /* Unknown certificate authority certificate */
      WS_ERR_PARSE_FAIL                                   = ( 32), /* Ws err parse fail */
      WS_ERR_WAVE_SECURITY_CONTEXT                        = ( 33), /* Ws err wave security context */
-     WS_ERR_UNSUPPORTED_CRYPTO_ALGORITHM                 = ( 34), /* Ws err unsupported crypto algorithm */
+     WS_ERR_UNSUPPORTED_CRYPTO_OPERATION                 = ( 34), /* The operation is not supported by the crypto libraries */
+     WS_ERR_UNSUPPORTED_CRYPTO_ALGORITHM                 = ( 34), /* The operation is not supported by the crypto libraries */
      WS_ERR_WRONG_KEY_TYPE                               = ( 35), /* Key does not support an operation of the specified type */
      WS_ERR_CRYPTO_INTERNAL                              = ( 36), /* Undocumented internal error in crypto libraries */
      WS_ERR_BAD_DATA_FROM_DATABASE                       = ( 37), /* Bad data read from database */
-     WS_ERR_HPSAM                                        = ( 38), /* HPSAM error. To use software crypto, set crypto_provider = software_security_builder in /etc/viicsec.conf. To use the HPSAM emulator (for NTRU internal development purposes only), set the environment variable VIICSEC_HARDWARE_TYPE to FLAG_SIMULATED_HW. */
+     WS_ERR_HPSAM                                        = ( 38), /* HPSAM error. */
      WS_ERR_MESSAGE_DOES_NOT_USE_GENERATION_TIME         = ( 39), /* Message does not use generation time */
      WS_ERR_MESSAGE_DOES_NOT_USE_GENERATION_LOCATION     = ( 40), /* Message does not use generation location */
      WS_ERR_MESSAGE_DOES_NOT_USE_EXPIRY                  = ( 41), /* Message does not use expiry */
@@ -123,9 +124,9 @@ typedef enum {
      WS_ERR_INVALID_HANDLE                               = ( 67), /* The provided handle is not valid */
      WS_ERR_PSID_NOT_IN_CONTEXT                          = ( 68), /* The provided Security Context does not contain the specified PSID */
      WS_ERR_NOT_IMPLEMENTED                              = ( 69), /* The mesage type is not supported */
-     WS_ERR_INVALID_GLOBAL_CONFIG                        = ( 70), /* An error with the global configuration file occured */
-     WS_ERR_INVALID_PROFILE_CONFIG                       = ( 71), /* An error with a profile configuration file occured */
-     WS_ERR_INVALID_CONTEXT_CONFIG                       = ( 72), /* An error with a context configuration file occured */
+     WS_ERR_INVALID_GLOBAL_CONFIG                        = ( 70), /* An error with the global configuration file occurred */
+     WS_ERR_INVALID_PROFILE_CONFIG                       = ( 71), /* An error with a profile configuration file occurred */
+     WS_ERR_INVALID_CONTEXT_CONFIG                       = ( 72), /* An error with a context configuration file occurred */
      WS_ERR_MESSAGE_EXPIRED                              = ( 73), /* Message has expired */
      WS_ERR_MESSAGE_IN_FUTURE                            = ( 74), /* Message is in the future */
      WS_ERR_DATA_NOT_EXTRACTED                           = ( 75), /* Parser has not been given all the information needed to carry out this action */
@@ -178,7 +179,7 @@ typedef enum {
      WS_ERR_HSM_FILE_FULL                                = (122), /* HSM: No more memory available */
      WS_ERR_HSM_EXECUTION_ERROR_NVRAM_UNCHANGED          = (123), /* HSM: Internal execution error and the result is that the NVRAM is unchanged */
      WS_ERR_HSM_EXECUTION_ERROR_NVRAM_CHANGED            = (124), /* HSM: Internal execution error and the result is that the NVRAM is changed */
-     WS_ERR_HSM_NO_PRECISE_DIAGNOSIS                     = (125), /* HSM: An exception occured of which no precise diagnosis is available. */
+     WS_ERR_HSM_NO_PRECISE_DIAGNOSIS                     = (125), /* HSM: An exception occurred of which no precise diagnosis is available. */
      WS_ERR_HSM_CONDITIONS_NOT_SATISFIED                 = (126), /* HSM: Conditions not satisfied */
      WS_ERR_HSM_SECURITY_STATUS_NOT_SATISFIED            = (127), /* HSM: Security status not satisfied */
      WS_ERR_HSM_AUTHENTICATION_METHOD_BLOCKED            = (128), /* HSM: Authentication method blocked */
@@ -233,6 +234,19 @@ typedef enum {
      WS_ERR_PKI_LCM_NOT_INITIALIZED                      = (177), /* The LCM has not be initialized for SCMS service. */
      WS_ERR_INVALID_ENROLLMENT_CONFIG                    = (178), /* The enrollment.conf file has one or more invalid entries. */
      WS_ERR_INVALID_ENROLLMENT_DATA                      = (179), /* The enrollment certificate and/or its signing key is invalid. */
+     WS_ERR_INVALID_PKICONN_CONFIG                       = (180), /* An error with the PKI connection configuration file occurred. */
+     WS_ERR_MISBEHAVIOR_NOT_ENABLED                      = (181), /* Misbehavior system has not been enabled. */
+     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_SUPPORTED        = (182), /* The requested PSID value is not supported by the Misbehavior system. */
+     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_ENABLED          = (183), /* The application misbehavior system has not been enabled. */
+     WS_ERR_INVALID_MISBEHAVIOR_DATATYPE                 = (184), /* The application data is not valid for the type of misbehavior detector. */
+     WS_ERR_FAILED_REPORT_ENCODING                       = (185), /* Failed to encode misbehavior report. */
+     WS_ERR_MISBEHAVIOR_DETECTED                         = (186), /* Misbehavior was detected. */
+     WS_ERR_MISBEHAVIOR_STORE_REPORT                     = (187), /* Unable to store report. */
+     WS_ERR_BUFFER_TOO_LARGE                             = (188), /* The supplied buffer is too large. */
+     WS_ERR_HSM_NOT_INITIALIZED                          = (189), /* The HSM has not been initialized. */
+     WS_ERR_HSM_INVALID_INITIALIZATION_DATA              = (190), /* The HSM initialization files are invalid in some way. */
+     WS_ERR_FILE_SECURITY                                = (191), /* Secured file failed security checks. */
+     WS_ERR_NOT_LICENSED                                 = (192), /* The requested feature is not licensed. */
 
 } AEROLINK_RESULT;
 

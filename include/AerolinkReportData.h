@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+*  Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are
@@ -43,14 +43,17 @@ extern "C" {
 typedef enum
 {
     ARIB_CERTIFICATE_STATUS =1,
+    ARIB_SYSTEM_FILE_STATUS =2,
 } AerolinkReportIdBitmap;
 
 /***
  * @brief Callback function to be registered to receive error and/or status messages
  *        from the library.
  * @param id identifies, with a single bit set, the type of report being provided.
- * @param report should be cast as a pointer to the type representing the report data.
- * For example, if id is ARIB_CERTIFICATE_STATUS, report should be cast to a CertificateStatusReport const*.
+ * @param report should be cast as a pointer to the type representing the report data
+ * as follows:
+ * id = ARIB_CERTIFICATE_STATUS => report is a CertificateStatusReport const*.
+ * id = ARIB_SYSTEM_FILE_STATUS => report is a SystemFileStatusReport const*.
  * @param userData contains the data passed in when the callback function was registered.
  */
 typedef void (*AerolinkReportCallback)(
@@ -81,6 +84,26 @@ typedef struct
     uint32_t       lcmDirLength;
     uint8_t const *lcmDir;
 } CertificateStatusReport;
+
+
+
+/**
+ * @brief Enumeration type of system file status
+ */
+typedef enum
+{
+    SFSB_VALID_CRL = 0x00000001,
+} SystemFileStatusBitmap;
+
+/**
+ * @brief Data structure for system file status reports
+ * @param status contains one or more values of type SystemFileStatusBitmap.
+ */
+typedef struct
+{
+    uint32_t       status;
+} SystemFileStatusReport;
+
 
 #ifdef __cplusplus
 }

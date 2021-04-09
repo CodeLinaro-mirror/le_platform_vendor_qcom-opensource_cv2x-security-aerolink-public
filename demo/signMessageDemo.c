@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
+*  Copyright (c) 2016-2021, The Linux Foundation. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are
@@ -63,6 +63,12 @@ static void updateCallbackFunction(
             printf("    status:          0x%08x\n", data->status);
             printf("    lcm path length: %u\n", data->lcmDirLength);
             printf("    lcm path:        %s\n", (char const*)&data->lcmDir[0]);
+        }
+        else if (ARIB_SYSTEM_FILE_STATUS == id)
+        {
+            printf("  report id = ARIB_SYSTEM_FILE_STATUS\n");
+            SystemFileStatusReport const* data = (SystemFileStatusReport const*)reportData;
+            printf("    status:          0x%08x\n", data->status);
         }
         else
         {
@@ -476,7 +482,9 @@ int main (int argc, char *argv[])
      * Register to receive error and/or status updates
      */
     printf("Register status callback\n");
-    result = securityServices_registerReportCallback((uint32_t)ARIB_CERTIFICATE_STATUS, updateCallbackFunction, &testUserData);
+    result = securityServices_registerReportCallback(
+        (uint32_t)(ARIB_CERTIFICATE_STATUS|ARIB_SYSTEM_FILE_STATUS),
+        updateCallbackFunction, &testUserData);
     if (result != WS_SUCCESS)
     {
         LOG("securityServices_registerReportCallback() failed", result);

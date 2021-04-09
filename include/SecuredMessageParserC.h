@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
+*  Copyright (c) 2013-2021, The Linux Foundation. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are
@@ -41,6 +41,7 @@
 #include "Encryption.h"
 #include "ExternalDataHashAlg.h"
 #include "PayloadType.h"
+#include "MisbehaviorData.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,6 +57,7 @@ typedef void* SecuredMessageParserC;
  * @brief Callback function prototype for use with smp_verifySignaturesAsync().
  */
 typedef void (*ValidateCallback)(AEROLINK_RESULT returnCode, void *userData);
+
 
 
 /**
@@ -824,6 +826,46 @@ smp_verifySignaturesAsyncPriority
      uint8_t priority,
      void *userData,
      ValidateCallback callbackFunction);
+
+/**
+ * @brief Check the most recently extracted message for misbehavior's.
+ *
+ * @param smpHandle (IN) Handle to a previously allocated secured message parser.
+ * @param bsmData (IN)
+ * @param typeDetected (OUT) Returns class of misbehaviors detected
+ *
+ * @return AEROLINK_RESULT
+ *
+ *
+ * @retval WS_SUCCESS
+ *     - operation was successful
+ *
+ * @retval WS_ERR_NOT_INITIALIZED
+ *     - library is not initialized
+ *
+ * @retval WS_ERR_BAD_ARGS
+ *     - smpHandle is NULL
+ *     - bsmData is NULL
+ *     - typeDetected is NULL
+ *
+ * @retval WS_ERR_INVALID_HANDLE
+ *     - smgHandle does not refer to a valid secured message parser
+ *
+ * @retval WS_ERR_INVALID_CONTEXT
+ *     - secured message parser is not associated with an open security context
+ *
+ * @retval WS_ERR_DATA_NOT_EXTRACTED
+ *     - smp_extract() has not passed for this secured message
+ *
+ * @retval WS_ERR_MISBEHAVOR_DETECTED
+ *     -
+ **/
+AEROLINK_EXPORT AEROLINK_RESULT
+smp_checkMisbehavior(
+    SecuredMessageParserC        smpHandle,
+    void const                  *applicationData,
+    MisbehaviorDetectedType_t   *typeDetected);
+
 
 AEROLINK_EXPORT AEROLINK_RESULT
 smp_getAssuranceLevel(
