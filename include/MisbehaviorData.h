@@ -65,10 +65,9 @@ typedef struct {
 } MisbehaviorDetectedType_t;
 
 // BSM Misbehavior Report Classes
-uint16_t const MT_InconsistentBSM      = 0x0000000000000001;
-uint16_t const MT_SuspiciousBSM        = 0x0000000000000002;
-uint16_t const MT_SuspiciousBSMPlus    = 0x0000000000000004;
-
+#define MT_InconsistentBSM      0x0000000000000001
+#define MT_SuspiciousBSM        0x0000000000000002
+#define MT_SuspiciousBSMPlus    0x0000000000000004
 
 #ifdef __cplusplus
 }

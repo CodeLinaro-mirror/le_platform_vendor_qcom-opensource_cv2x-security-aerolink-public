@@ -724,9 +724,6 @@ smp_checkConsistency(
  * @retval WS_ERR_DATA_NOT_EXTRACTED
  *     - smp_extract() has not passed for this secured message
  *
- * @retval WS_ERR_CONSISTENCY_NOT_CHECKED
- *     - smp_checkConsistency() has not been called for this secured message
- *
  * @retval WS_ERR_NOT_SUPPORTED_FOR_THIS_MESSAGE_SECURITY_TYPE
  *     - this function does not support this message's security type
  *
@@ -769,9 +766,6 @@ smp_verifySignatures(
  * @retval WS_ERR_DATA_NOT_EXTRACTED
  *     - smp_extract() has not passed for this secured message
  *
- * @retval WS_ERR_CONSISTENCY_NOT_CHECKED
- *     - smp_checkConsistency() has not been called for this secured message
- *
  * @retval WS_ERR_NOT_SUPPORTED_FOR_THIS_MESSAGE_SECURITY_TYPE
  *     - this function does not support this message's security type
  */
@@ -813,9 +807,6 @@ smp_verifySignaturesAsync(
  *
  * @retval WS_ERR_DATA_NOT_EXTRACTED
  *     - smp_extract() has not passed for this secured message
- *
- * @retval WS_ERR_CONSISTENCY_NOT_CHECKED
- *     - smp_checkConsistency() has not been called for this secured message
  *
  * @retval WS_ERR_NOT_SUPPORTED_FOR_THIS_MESSAGE_SECURITY_TYPE
  *     - this function does not support this message's security type
