@@ -14,12 +14,12 @@ add_executable (${SIGN_MESSAGE_DEMO} signMessageDemo.c)
 add_executable (${SYMMETRIC_KEY_ENCRYPT_DATA_DEMO} symmetricKeyEncryptDataDemo.c)
 add_executable (${SYMMETRIC_KEY_ENCRYPT_SPDU_DEMO} symmetricKeyEncryptSpduDemo.c)
 
-target_link_libraries(${ENCRYPT_DATA_DEMO} viicsec)
-target_link_libraries(${ENCRYPT_SPDU_DEMO} viicsec)
-target_link_libraries(${SIGN_MESSAGE_DEMO_ASYNC} viicsec)
-target_link_libraries(${SIGN_MESSAGE_DEMO} viicsec)
-target_link_libraries(${SYMMETRIC_KEY_ENCRYPT_DATA_DEMO} viicsec)
-target_link_libraries(${SYMMETRIC_KEY_ENCRYPT_SPDU_DEMO} viicsec)
+target_link_libraries(${ENCRYPT_DATA_DEMO} viicsec -Wl,--allow-shlib-undefined)
+target_link_libraries(${ENCRYPT_SPDU_DEMO} viicsec -Wl,--allow-shlib-undefined)
+target_link_libraries(${SIGN_MESSAGE_DEMO_ASYNC} viicsec -Wl,--allow-shlib-undefined)
+target_link_libraries(${SIGN_MESSAGE_DEMO} viicsec -Wl,--allow-shlib-undefined)
+target_link_libraries(${SYMMETRIC_KEY_ENCRYPT_DATA_DEMO} viicsec -Wl,--allow-shlib-undefined)
+target_link_libraries(${SYMMETRIC_KEY_ENCRYPT_SPDU_DEMO} viicsec -Wl,--allow-shlib-undefined)
 
 # install to target
 install ( TARGETS ${ENCRYPT_DATA_DEMO}
