@@ -25,6 +25,41 @@
 *  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 *  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 *  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*
+*  Changes from Qualcomm Innovation Center are provided under the following license:
+*
+*  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted (subject to the limitations in the
+*  disclaimer below) provided that the following conditions are met:
+*
+*      * Redistributions of source code must retain the above copyright
+*        notice, this list of conditions and the following disclaimer.
+*
+*      * Redistributions in binary form must reproduce the above
+*        copyright notice, this list of conditions and the following
+*        disclaimer in the documentation and/or other materials provided
+*        with the distribution.
+*
+*      * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+*        contributors may be used to endorse or promote products derived
+*        from this software without specific prior written permission.
+*
+*  NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+*  GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+*  HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+*  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+*  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+*  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+*  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+*  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+*  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+*  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+*  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /* `ws_errno.h'
@@ -54,72 +89,71 @@ ws_strerror(int err);
 
 typedef enum {
      WS_SUCCESS                                          = (  0), /* No error */
-     WS_ERR_BAD_ARGS                                     = (  1), /* Bad arguments to method */
-     WS_ERR_UNABLE_TO_DECRYPT_MESSAGE                    = (  2), /* Ws err unable to decrypt message */
-     WS_ERR_MESSAGE_REPLAY                               = (  3), /* Duplicate message -- possible replay attack */
-     WS_ERR_CERTIFICATE_EXPIRED                          = (  4), /* Expired certificate */
-     WS_ERR_NO_CERTIFICATE                               = (  5), /* Missing end-entity certificate or no valid signing certificate */
-     WS_ERR_NO_CA_CERTIFICATE                            = (  6), /* Missing CA certificate in chain */
-     WS_ERR_INVALID_CERTIFICATE                          = (  7), /* Certificate contains a disallowed set of field values */
-     WS_ERR_MESSAGE_GEN_BEFORE_CERT_VALIDITY_PERIOD      = (  8), /* Message generated before certificate is valid */
-     WS_ERR_MESSAGE_GEN_AFTER_CERT_VALIDITY_PERIOD       = (  9), /* Message generated after certificate expiration */
-     WS_ERR_MESSAGE_EXP_BEFORE_CERT_VALIDITY_PERIOD      = ( 10), /* Message expiration is before certificate is valid */
-     WS_ERR_MESSAGE_EXP_AFTER_CERT_VALIDITY_PERIOD       = ( 11), /* Message expiration is after certificate expiration */
-     WS_ERR_NO_KEY_AVAILABLE                             = ( 12), /* Could not find a key to perform the requested operation */
-     WS_ERR_NO_MATCHING_KEY                              = ( 13), /* No key in WSC to match key in imported cert */
-     WS_ERR_CERTIFICATE_REVOKED                          = ( 14), /* Ws err certificate revoked */
-     WS_ERR_UNKNOWN_CA_CERTIFICATE                       = ( 15), /* Unknown certificate authority certificate */
-     WS_ERR_PARSE_FAIL                                   = ( 16), /* Ws err parse fail */
-     WS_ERR_UNSUPPORTED_CRYPTO_OPERATION                 = ( 17), /* The operation is not supported by the crypto libraries */
-     WS_ERR_UNSUPPORTED_CRYPTO_ALGORITHM                 = ( 17), /* The operation is not supported by the crypto libraries */
-     WS_ERR_WRONG_KEY_TYPE                               = ( 18), /* Key does not support an operation of the specified type */
-     WS_ERR_CRYPTO_INTERNAL                              = ( 19), /* Undocumented internal error in crypto libraries */
-     WS_ERR_INCOMPLETE_STATE                             = ( 20), /* Object has not been given all the information needed to carry out this action */
-     WS_ERR_CONFIG_VAL                                   = ( 21), /* Unexpected value in global configuration file */
-     WS_ERR_ENCODE                                       = ( 22), /* Encoding error */
-     WS_ERR_SYMMETRIC_AUTHENTICATION_CHECK_FAILED        = ( 23), /* Symmetric authentication check failed */
-     WS_ERR_NO_GENERATION_TIME                           = ( 24), /* Expected but did not find generation time field in signed message */
-     WS_ERR_NO_GENERATION_LOCATION                       = ( 25), /* Expected but did not find generation location field in signed message */
-     WS_ERR_NO_EXPIRY_TIME                               = ( 26), /* Expected but did not find expiry time field in signed message */
-     WS_ERR_LCM_FEATURE_UNSUPPORTED                      = ( 27), /* The Local Certificate Manager does not support this feature */
-     WS_ERR_INTERNAL                                     = ( 28), /* Internal error */
-     WS_ERR_ALREADY_OPEN                                 = ( 29), /* The specified Security Context is already open */
-     WS_ERR_INVALID_PSID                                 = ( 30), /* The PSID in the message does not match the PSID in the context */
-     WS_ERR_INVALID_PERMISSIONS                          = ( 31), /* The provided permissions are not a valid format */
-     WS_ERR_NOT_INITIALIZED                              = ( 32), /* The security services has not been initialized */
-     WS_ERR_CONTEXT_NOT_INITIALIZED                      = ( 33), /* The security context has not been initialized */
-     WS_ERR_BUFFER_TOO_SMALL                             = ( 34), /* The supplied buffer is too small */
-     WS_ERR_INVALID_CONTEXT                              = ( 35), /* The object is not associated with a valid Security Context */
-     WS_ERR_INVALID_HANDLE                               = ( 36), /* The provided handle is not valid */
-     WS_ERR_PSID_NOT_IN_CONTEXT                          = ( 37), /* The provided Security Context does not contain the specified PSID */
-     WS_ERR_NOT_IMPLEMENTED                              = ( 38), /* Feature is currently unsupported */
-     WS_ERR_INVALID_GLOBAL_CONFIG                        = ( 39), /* An error with the global configuration file occurred */
-     WS_ERR_INVALID_PROFILE_CONFIG                       = ( 40), /* An error with a profile configuration file occurred */
-     WS_ERR_INVALID_CONTEXT_CONFIG                       = ( 41), /* An error with a context configuration file occurred */
-     WS_ERR_MESSAGE_EXPIRED                              = ( 42), /* Message has expired */
-     WS_ERR_MESSAGE_IN_FUTURE                            = ( 43), /* Message is in the future */
-     WS_ERR_DATA_NOT_EXTRACTED                           = ( 44), /* Parser has not been given all the information needed to carry out this action */
-     WS_ERR_EXTERNAL_DATA_MISSING                        = ( 45), /* Message requires external data be provided for this operation */
-     WS_ERR_MESSAGE_SIGNED_OUTSIDE_REGION                = ( 46), /* Cert not authorized to sign where it did */
-     WS_ERR_UNAUTHORIZED_PERMISSIONS                     = ( 47), /* Psid/ITS-AID not found in signing certificate */
-     WS_ERR_VALUE_ALREADY_SET                            = ( 48), /* Ws err value already set */
-     WS_ERR_PSID_NOT_IN_CERTIFICATE                      = ( 49), /* Specified psid is not in the certificate permissions list */
-     WS_ERR_NOT_SUPPORTED_FOR_THIS_MESSAGE_SECURITY_TYPE = ( 50), /* Function does not support this message's security type */
-     WS_ERR_DUPLICATE_ENCRYPTION_ID                      = ( 51), /* The encryption id is already used */
-     WS_ERR_INVALID_SIGNER_ID_TYPE                       = ( 52), /* The SignerIdentifier is not valid */
-     WS_ERR_INVALID_PRIVATE_KEY_ENCODING                 = ( 53), /* The private key encoding is not supported */
-     WS_ERR_CRYPTO_QUEUE_FULL                            = ( 54), /* All threads in the pool are in use */
-     WS_ERR_CERTIFICATES_INCONSISTENT                    = ( 55), /* Data in the certificate chain is inconsistent */
-     WS_ERR_MEMORY_FAILURE                               = ( 56), /* Memory cannot be allocated */
-     WS_ERR_MESSAGE_EXPIRY_BEFORE_GENERATION             = ( 57), /* Message expiry time is before the message generation time */
-     WS_ERR_MESSAGE_FROM_TOO_FAR_AWAY                    = ( 58), /* Message was generated too far from the current location */
-     WS_ERR_MESSAGE_TOO_OLD                              = ( 59), /* Message was signed too far in the past */
-     WS_ERR_MESSAGE_SIGNATURE_VERIFICATION_FAILED        = ( 60), /* Message signature fails to verify */
-     WS_ERR_CERTIFICATE_SIGNATURE_VERIFICATION_FAILED    = ( 61), /* Certificate signature fails to verify */
-     WS_ERR_INVALID_FIELD                                = ( 62), /* Field has an invalid value */
-     WS_ERR_UNABLE_TO_DECRYPT_DATA                       = ( 63), /* Failed to decrypt the data with the symmetric key */
-     WS_ERR_UNABLE_TO_DECRYPT_SYMMETRIC_KEY              = ( 64), /* Failed to decrypt symmetric key */
-     WS_ERR_UNAUTHORIZED_REGION                          = ( 65), /* Certificate is not allowed to sign a message at the current location */
+     WS_ERR_BAD_ARGS                                     = (  1), /* Bad arguments to method. */
+     WS_ERR_UNABLE_TO_DECRYPT_MESSAGE                    = (  2), /* Error decrypting message. */
+     WS_ERR_MESSAGE_REPLAY                               = (  3), /* Duplicate message -- possible replay attack. */
+     WS_ERR_CERTIFICATE_EXPIRED                          = (  4), /* Expired certificate. */
+     WS_ERR_NO_CERTIFICATE                               = (  5), /* Missing end-entity certificate or no valid signing certificate. */
+     WS_ERR_NO_CA_CERTIFICATE                            = (  6), /* Missing CA certificate in chain. */
+     WS_ERR_INVALID_CERTIFICATE                          = (  7), /* Certificate contains a disallowed set of field values. */
+     WS_ERR_MESSAGE_GEN_BEFORE_CERT_VALIDITY_PERIOD      = (  8), /* Message generated before certificate is valid. */
+     WS_ERR_MESSAGE_GEN_AFTER_CERT_VALIDITY_PERIOD       = (  9), /* Message generated after certificate expiration. */
+     WS_ERR_MESSAGE_EXP_BEFORE_CERT_VALIDITY_PERIOD      = ( 10), /* Message expiration is before certificate is valid. */
+     WS_ERR_MESSAGE_EXP_AFTER_CERT_VALIDITY_PERIOD       = ( 11), /* Message expiration is after certificate expiration. */
+     WS_ERR_NO_KEY_AVAILABLE                             = ( 12), /* Could not find a key to perform the requested operation. */
+     WS_ERR_NO_MATCHING_KEY                              = ( 13), /* No private key to match key in imported cert. */
+     WS_ERR_CERTIFICATE_REVOKED                          = ( 14), /* Certificate is revoked. */
+     WS_ERR_UNKNOWN_CA_CERTIFICATE                       = ( 15), /* Unknown certificate authority certificate. */
+     WS_ERR_PARSE_FAIL                                   = ( 16), /* Parsing error. */
+     WS_ERR_UNSUPPORTED_CRYPTO_OPERATION                 = ( 17), /* The operation is not supported by the crypto libraries. */
+     WS_ERR_WRONG_KEY_TYPE                               = ( 18), /* Key does not support an operation of the specified type. */
+     WS_ERR_CRYPTO_INTERNAL                              = ( 19), /* Undocumented internal error in crypto libraries. */
+     WS_ERR_INCOMPLETE_STATE                             = ( 20), /* Object has not been given all the information needed to carry out this action. */
+     WS_ERR_CONFIG_VAL                                   = ( 21), /* Unexpected value in configuration file. */
+     WS_ERR_ENCODE                                       = ( 22), /* Encoding error. */
+     WS_ERR_SYMMETRIC_AUTHENTICATION_CHECK_FAILED        = ( 23), /* Symmetric authentication check failed. */
+     WS_ERR_NO_GENERATION_TIME                           = ( 24), /* Generation time required, but not available. */
+     WS_ERR_NO_GENERATION_LOCATION                       = ( 25), /* Generation location required, but not available. */
+     WS_ERR_NO_EXPIRY_TIME                               = ( 26), /* Expiry time required, but not available. */
+     WS_ERR_LCM_FEATURE_UNSUPPORTED                      = ( 27), /* The Local Certificate Manager does not support this feature. */
+     WS_ERR_INTERNAL                                     = ( 28), /* Internal error. */
+     WS_ERR_ALREADY_OPEN                                 = ( 29), /* The specified Security Context is already open. */
+     WS_ERR_INVALID_PSID                                 = ( 30), /* The PSID in the message does not match the PSID in the context. */
+     WS_ERR_INVALID_PERMISSIONS                          = ( 31), /* The provided permissions are not a valid format. */
+     WS_ERR_NOT_INITIALIZED                              = ( 32), /* The security services has not been initialized. */
+     WS_ERR_CONTEXT_NOT_INITIALIZED                      = ( 33), /* The security context has not been initialized. */
+     WS_ERR_BUFFER_TOO_SMALL                             = ( 34), /* The supplied buffer is too small. */
+     WS_ERR_INVALID_CONTEXT                              = ( 35), /* The object is not associated with a valid Security Context. */
+     WS_ERR_INVALID_HANDLE                               = ( 36), /* The provided handle is not valid. */
+     WS_ERR_PSID_NOT_IN_CONTEXT                          = ( 37), /* The provided Security Context does not contain the specified PSID. */
+     WS_ERR_NOT_IMPLEMENTED                              = ( 38), /* Feature is currently unsupported. */
+     WS_ERR_INVALID_GLOBAL_CONFIG                        = ( 39), /* An error with the global configuration file occurred. */
+     WS_ERR_INVALID_PROFILE_CONFIG                       = ( 40), /* An error with a profile configuration file occurred. */
+     WS_ERR_INVALID_CONTEXT_CONFIG                       = ( 41), /* An error with a context configuration file occurred. */
+     WS_ERR_MESSAGE_EXPIRED                              = ( 42), /* Message has expired. */
+     WS_ERR_MESSAGE_IN_FUTURE                            = ( 43), /* Message is in the future. */
+     WS_ERR_DATA_NOT_EXTRACTED                           = ( 44), /* Parser has not been given all the information needed to carry out this action. */
+     WS_ERR_EXTERNAL_DATA_MISSING                        = ( 45), /* Message requires external data be provided for this operation. */
+     WS_ERR_MESSAGE_SIGNED_OUTSIDE_REGION                = ( 46), /* Cert not authorized to sign where it did. */
+     WS_ERR_UNAUTHORIZED_PERMISSIONS                     = ( 47), /* Psid/ITS-AID not found in signing certificate. */
+     WS_ERR_VALUE_ALREADY_SET                            = ( 48), /* Value cannot be overwritten. */
+     WS_ERR_PSID_NOT_IN_CERTIFICATE                      = ( 49), /* Specified psid is not in the certificate permissions list. */
+     WS_ERR_NOT_SUPPORTED_FOR_THIS_MESSAGE_SECURITY_TYPE = ( 50), /* Function does not support this message's security type. */
+     WS_ERR_DUPLICATE_ENCRYPTION_ID                      = ( 51), /* The encryption id is already used. */
+     WS_ERR_INVALID_SIGNER_ID_TYPE                       = ( 52), /* The SignerIdentifier is not valid. */
+     WS_ERR_INVALID_PRIVATE_KEY_ENCODING                 = ( 53), /* The private key encoding is not supported. */
+     WS_ERR_CRYPTO_QUEUE_FULL                            = ( 54), /* All threads in the pool are in use. */
+     WS_ERR_CERTIFICATES_INCONSISTENT                    = ( 55), /* Data in the certificate chain is inconsistent. */
+     WS_ERR_MEMORY_FAILURE                               = ( 56), /* Memory cannot be allocated. */
+     WS_ERR_MESSAGE_EXPIRY_BEFORE_GENERATION             = ( 57), /* Message expiry time is before the message generation time. */
+     WS_ERR_MESSAGE_FROM_TOO_FAR_AWAY                    = ( 58), /* Message was generated too far from the current location. */
+     WS_ERR_MESSAGE_TOO_OLD                              = ( 59), /* Message was signed too far in the past. */
+     WS_ERR_MESSAGE_SIGNATURE_VERIFICATION_FAILED        = ( 60), /* Message signature fails to verify. */
+     WS_ERR_CERTIFICATE_SIGNATURE_VERIFICATION_FAILED    = ( 61), /* Certificate signature fails to verify. */
+     WS_ERR_INVALID_FIELD                                = ( 62), /* Field has an invalid value. */
+     WS_ERR_UNABLE_TO_DECRYPT_DATA                       = ( 63), /* Failed to decrypt the data with the symmetric key. */
+     WS_ERR_UNABLE_TO_DECRYPT_SYMMETRIC_KEY              = ( 64), /* Failed to decrypt symmetric key. */
+     WS_ERR_UNAUTHORIZED_REGION                          = ( 65), /* Certificate is not allowed to sign a message at the current location. */
      WS_ERR_ALREADY_REGISTERED                           = ( 66), /* The context/lcm combination is already registered. */
      WS_ERR_ID_CHANGE_ABORT                              = ( 67), /* Id change aborted. */
      WS_ERR_ID_CHANGE_BLOCKED                            = ( 68), /* Id changes have been blocked. */
@@ -150,7 +184,7 @@ typedef enum {
      WS_ERR_INVALID_CA_CERTIFICATE_STORE                 = ( 93), /* Invalid CA certificate store format. */
      WS_ERR_CA_CERTIFICATE_STORE_VERIFICATION_FAILED     = ( 94), /* Failed to verify CA certificate store. */
      WS_ERR_PAYLOAD_NOT_SPDU                             = ( 95), /* The provided SPDU payload is not valid. */
-     WS_ERR_NO_PROFILE_FOR_PERMISSON                     = ( 96), /* There is not persmission for requested permission. */
+     WS_ERR_NO_PROFILE_FOR_PERMISSION                    = ( 96), /* There is no profile for the requested permission. */
      WS_ERR_INVALID_CRL_TYPE                             = ( 97), /* The crl type is not supported by this crl processor. */
      WS_ERR_READ_FILE                                    = ( 98), /* Failed to read file. */
      WS_ERR_INVALID_SPDU_HASH                            = ( 99), /* The hash algorithm in the signed SPDU does not match the hash algorithm used by the signer. */
@@ -188,6 +222,8 @@ typedef enum {
      WS_ERR_ACF_NOT_FOUND                                = (131), /* Unable to find specified ACF. */
      WS_ERR_INVALID_THROTTLEMANAGER_CONFIG               = (132), /* An error with the throttle manager configuration occurred. */
      WS_ERR_THROTTLE_MANAGER_NOT_RUNNING                 = (133), /* The throttle manager service cannot be reached. */
+     WS_ERR_NO_FILE                                      = (134), /* File does not exist. */
+     WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (135), /* An error with the misbehavior configuration file occurred */
 
 } AEROLINK_RESULT;
 
