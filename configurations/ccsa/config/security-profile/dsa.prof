@@ -1,0 +1,97 @@
+# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted (subject to the limitations in the
+# disclaimer below) provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following
+# disclaimer in the documentation and/or other materials provided
+# with the distribution.
+#
+# * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+# contributors may be used to endorse or promote products derived
+# from this software without specific prior written permission.
+#
+# NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+# GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+# HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+# GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+### Configuration for DSRC Service Advisement security profile.
+
+psid  0x0e20
+
+# Interval, in ms, at which full certificates are included in signed SPDUs.
+certificate_interval                     0      # Profile requires a cert
+
+##############################################################################
+### Set which fields are included in the security headers.
+
+include_generation_time                 true    # not specified
+
+include_expiry_time                    false    # not specified
+
+    # SPDU expiry time is set to generation time plus this value, in ms.
+    spdu_lifetime                          0    # arbitrary, not used
+
+include_generation_location            false    # not specified
+
+##############################################################################
+### Set which relevance checks are executed.
+
+check_replays                          false    # not specified
+
+check_relevance_past_freshness         false    # not specified
+
+    # Maximum time in the past, in us, to accept an SPDU as valid.
+    past_freshness_tolerance               0    # arbitrary, not used
+
+check_relevance_future_freshness       false    # not specified
+
+    # Maximum time in the future, in us, to accept an SPDU as valid.
+    future_freshness_tolerance             0    # arbitrary, not used
+
+check_relevance_expiry_time            false    # not specified
+
+check_relevance_generation_location    false    # not specified
+
+    # Maximum distance from receiver, in meters, to accept an SPDU as valid.
+    distance_tolerance                     0    # arbitrary, not used
+
+check_relevance_certificate_expiry      true    # not specified
+
+##############################################################################
+### Set which consistency checks are executed.
+
+check_consistency_generation_location  false    # not specified
+
+##############################################################################
+### Whether or not to perform CRL checks for this PSID
+
+check_crl                              false    # no revocation at this time
+
+##############################################################################
+### Set how long SPDUs are valid, in seconds, after the last CRL expires.
+
+overdue_crl_tolerance                      0    # arbitrary, not used
+
+##############################################################################
+### Peer To Peer Certificate Distribution or Certificate Learning or
+### Unknown Certificate Request
+
+# Set if and how certificates are requested and provided if unknown to the
+# receiver.  Choices are none, inline, out_of_band.
+p2pcd_flavor                            none    # not specified
