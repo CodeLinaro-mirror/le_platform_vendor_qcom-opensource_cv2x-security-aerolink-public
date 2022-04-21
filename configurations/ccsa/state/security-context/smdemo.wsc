@@ -28,7 +28,7 @@
 #
 #  Changes from Qualcomm Innovation Center are provided under the following license:
 #
-#  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+#  Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted (subject to the limitations in the
@@ -79,7 +79,7 @@ lcms = [
         certificate_type                explicit
         key_type                        original
         encrypt_download_request        false
-        pki_configuration               pki.conf
+        pki_configuration               pkiserv.conf
 
         ### Required parameters when key_type is set to non-butterfly
         #encrypt_certificate_response    false
