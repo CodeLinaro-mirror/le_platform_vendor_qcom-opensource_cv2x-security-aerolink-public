@@ -1,4 +1,4 @@
-# Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+# Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted (subject to the limitations in the
@@ -33,7 +33,7 @@
 ### Configuration for after market installed system on vehicle normal BSM (Basic Safety Message
 ### from OBU) security profile.
 
-psid  0xe21
+psid  0x0e21
 
 # Interval, in ms, at which full certificates are included in signed SPDUs.
 certificate_interval                     450    # BSM profile requires 450 ms.

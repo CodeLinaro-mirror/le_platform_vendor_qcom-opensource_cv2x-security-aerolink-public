@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -204,26 +204,28 @@ typedef enum {
      WS_ERR_REQUEST_HASH_NOT_BEING_SERVICED              = (113), /* The request hash associated with the certificate is not being serviced. */
      WS_ERR_PKI_LCM_NOT_INITIALIZED                      = (114), /* The LCM has not be initialized for SCMS service. */
      WS_ERR_INVALID_ENROLLMENT_CONFIG                    = (115), /* The enrollment.conf file has one or more invalid entries. */
-     WS_ERR_INVALID_ENROLLMENT_DATA                      = (116), /* The enrollment certificate and/or its signing key is invalid. */
-     WS_ERR_INVALID_PKICONN_CONFIG                       = (117), /* An error with the PKI connection configuration file occurred. */
-     WS_ERR_MISBEHAVIOR_NOT_ENABLED                      = (118), /* Misbehavior system has not been enabled. */
-     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_SUPPORTED        = (119), /* The requested PSID value is not supported by the Misbehavior system. */
-     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_ENABLED          = (120), /* The application misbehavior system has not been enabled. */
-     WS_ERR_INVALID_MISBEHAVIOR_DATATYPE                 = (121), /* The application data is not valid for the type of misbehavior detector. */
-     WS_ERR_FAILED_REPORT_ENCODING                       = (122), /* Failed to encode misbehavior report. */
-     WS_ERR_MISBEHAVIOR_DETECTED                         = (123), /* Misbehavior was detected. */
-     WS_ERR_MISBEHAVIOR_STORE_REPORT                     = (124), /* Unable to store report. */
-     WS_ERR_BUFFER_TOO_LARGE                             = (125), /* The supplied buffer is too large. */
-     WS_ERR_HSM_NOT_INITIALIZED                          = (126), /* The HSM has not been initialized. */
-     WS_ERR_HSM_INVALID_INITIALIZATION_DATA              = (127), /* The HSM initialization files are invalid in some way. */
-     WS_ERR_FILE_SECURITY                                = (128), /* Secured file failed security checks. */
-     WS_ERR_NOT_LICENSED                                 = (129), /* The requested feature is not licensed. */
-     WS_ERR_FILE_ALREADY_OPEN                            = (130), /* The specified file is already open. */
-     WS_ERR_ACF_NOT_FOUND                                = (131), /* Unable to find specified ACF. */
-     WS_ERR_INVALID_THROTTLEMANAGER_CONFIG               = (132), /* An error with the throttle manager configuration occurred. */
-     WS_ERR_THROTTLE_MANAGER_NOT_RUNNING                 = (133), /* The throttle manager service cannot be reached. */
-     WS_ERR_NO_FILE                                      = (134), /* File does not exist. */
-     WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (135), /* An error with the misbehavior configuration file occurred */
+     WS_ERR_INVALID_PKI_SCMS_SERVICE_CONFIG              = (116), /* A PKI SCMS service configuration file has one or more invalid entries. */
+     WS_ERR_INVALID_ENROLLMENT_DATA                      = (117), /* The enrollment certificate and/or its signing key is invalid. */
+     WS_ERR_INVALID_PKICONN_CONFIG                       = (118), /* An error with the PKI connection configuration file occurred. */
+     WS_ERR_MISBEHAVIOR_NOT_ENABLED                      = (119), /* Misbehavior system has not been enabled. */
+     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_SUPPORTED        = (120), /* The requested PSID value is not supported by the Misbehavior system. */
+     WS_ERR_MISBEHAVIOR_APPLICATION_NOT_ENABLED          = (121), /* The application misbehavior system has not been enabled. */
+     WS_ERR_INVALID_MISBEHAVIOR_DATATYPE                 = (122), /* The application data is not valid for the type of misbehavior detector. */
+     WS_ERR_FAILED_REPORT_ENCODING                       = (123), /* Failed to encode misbehavior report. */
+     WS_ERR_MISBEHAVIOR_DETECTED                         = (124), /* Misbehavior was detected. */
+     WS_ERR_MISBEHAVIOR_STORE_REPORT                     = (125), /* Unable to store report. */
+     WS_ERR_BUFFER_TOO_LARGE                             = (126), /* The supplied buffer is too large. */
+     WS_ERR_HSM_NOT_INITIALIZED                          = (127), /* The HSM has not been initialized. */
+     WS_ERR_HSM_INVALID_INITIALIZATION_DATA              = (128), /* The HSM initialization files are invalid in some way. */
+     WS_ERR_FILE_SECURITY                                = (129), /* Secured file failed security checks. */
+     WS_ERR_NOT_LICENSED                                 = (130), /* The requested feature is not licensed. */
+     WS_ERR_FILE_ALREADY_OPEN                            = (131), /* The specified file is already open. */
+     WS_ERR_ACF_NOT_FOUND                                = (132), /* Unable to find specified ACF. */
+     WS_ERR_INVALID_THROTTLEMANAGER_CONFIG               = (133), /* An error with the throttle manager configuration occurred. */
+     WS_ERR_THROTTLE_MANAGER_NOT_RUNNING                 = (134), /* The throttle manager service cannot be reached. */
+     WS_ERR_NO_FILE                                      = (135), /* File does not exist. */
+     WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (136), /* An error with the misbehavior configuration file occurred */
+     WS_ERR_NO_ENROLLMENT                                = (137), /* Missing enrollment information */
 
 } AEROLINK_RESULT;
 
