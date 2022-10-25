@@ -65,7 +65,6 @@ lcms = [
     {
         lcm_type                        pseudonym
         lcm_name                        ccsaLcm
-        lcm_directory                   certificates
         acf_prefix                      ccsa
         use_scms                        false
         enable_misbehavior              false
@@ -78,8 +77,10 @@ lcms = [
 
         certificate_type                explicit
         key_type                        original
+        encrypt_cert_request            true
         encrypt_download_request        false
-        pki_configuration               pkiserv.conf
+        pki_configuration               pkiserv
+        certId                          L
 
         ### Required parameters when key_type is set to non-butterfly
         #encrypt_certificate_response    false
