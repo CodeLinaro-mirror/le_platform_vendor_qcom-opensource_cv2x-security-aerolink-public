@@ -174,10 +174,10 @@ typedef enum {
      WS_ERR_PKI_INVALID_CONFIG                           = ( 83), /* PKI: Invalid PKI config detected. */
      WS_ERR_PKI_ENCODE_BASE64                            = ( 84), /* PKI: Failed to encode base64. */
      WS_ERR_SAVE_FILE                                    = ( 85), /* Failed to save file. */
-     WS_ERR_UNSUPPORTED_CUSTOM_SERVICE                   = ( 86), /* Unsupported Aerolink service. */
+     WS_ERR_UNSUPPORTED_CUSTOM_SETTINGS_TYPE             = ( 86), /* Unsupported Aerolink custom settings type. */
      WS_ERR_UNSUPPORTED_CUSTOM_SETTING                   = ( 87), /* Unsupported Aerolink custom setting. */
      WS_ERR_INVALID_CUSTOM_SETTING_FORMAT                = ( 88), /* Invalid Aerolink custom setting format. */
-     WS_ERR_SERVICE_DISABLED                             = ( 89), /* The specified service is disabled. */
+     WS_ERR_CUSTOM_SETTINGS_TYPE_DISABLED                = ( 89), /* The specified Aerolink custom settings type is disabled. */
      WS_ERR_INVALID_ENCRYPTION_KEY                       = ( 90), /* Encryption key is invalid. */
      WS_ERR_ENCRYPTION_KEY_NOT_FOUND                     = ( 91), /* Encryption key not found. */
      WS_ERR_CMAC_VERIFICATION_FAILED                     = ( 92), /* CMAC verification failed. */
@@ -226,6 +226,7 @@ typedef enum {
      WS_ERR_NO_FILE                                      = (135), /* File does not exist. */
      WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (136), /* An error with the misbehavior configuration file occurred */
      WS_ERR_NO_ENROLLMENT                                = (137), /* Missing enrollment information */
+     WS_ERR_LOAD_CRYPTO_INTERFACE_LIB                    = (138), /* Failed to load crypto interface library and required functions. */
 
 } AEROLINK_RESULT;
 
