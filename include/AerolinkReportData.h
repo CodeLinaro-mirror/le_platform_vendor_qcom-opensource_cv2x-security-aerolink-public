@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -78,10 +78,10 @@ extern "C" {
 // Report Data Id bitmap
 typedef enum
 {
-    ARIB_CERTIFICATE_STATUS         = 0x00000001,
-    ARIB_SYSTEM_FILE_STATUS         = 0x00000002,
-    ARIB_CERTIFICATE_STATUS_DETAILS = 0x00000004,
-    ARIB_MISBEHAVIOR_STATUS         = 0x00000008,
+    ARIB_CERTIFICATE_STATUS             = 0x00000001,
+    ARIB_SYSTEM_FILE_STATUS             = 0x00000002,
+    ARIB_SIGNING_CERTIFICATE_STATUS     = 0x00000004,
+    ARIB_MISBEHAVIOR_PROTECTION_STATUS  = 0x00000008,
 } AerolinkReportIdBitmap;
 
 /***
@@ -115,10 +115,14 @@ typedef enum
  */
 typedef enum
 {
-    CSDB_VALID_CURRENT_CERTS =0x00000001,
-    CSDB_CERTS_AVAILABLE     =0x00000002,
-} CertificateStatusDetailsBitmap;
-
+    SCSB_VALID_CURRENT_CERTS            = 0x00000001,
+    SCSB_CERTS_AVAILABLE                = 0x00000002,
+    SCSB_HSM_ERROR                      = 0x00000004,
+    SCSB_PRIVATE_PUBLIC_KEY_MISMATCH    = 0x00000008,
+    SCSB_CERT_IN_CHAIN_MISSING          = 0x00000010,
+    SCSB_CERTS_IN_CHAIN_INCONSISTENT    = 0x00000020,
+    SCSB_CERT_IN_CHAIN_REVOKED          = 0x00000040,
+} SigningCertificateStatusBitmap;
 
 /**
  * @brief Data structure for certificate status
@@ -136,7 +140,7 @@ typedef struct
 /**
  * @brief Data structure for detail certificate status
  * @param version  of data structure
- * @param status contains one or more values of type CertificateStatusBitmap.
+ * @param status contains one or more values of type SigningCertificateStatusBitmap. //CertificateStatusBitmap.
  * @param currentPeriodNumberOfCertificates the number of certificates for the current period
  * @param nextPeriodNumberOfCertificates the number of certificates for the next period (UINT32_MAX if unknown)
  * @param lcmDirLength is the number of bytes in lcmDir including the null terminator.
@@ -145,15 +149,12 @@ typedef struct
 typedef struct
 {
     uint8_t        version;
-
     uint32_t       status;
     uint32_t       currentPeriodNumberOfCertificates;
     uint32_t       nextPeriodNumberOfCertificates;
-
     uint32_t       lcmDirLength;
     uint8_t const *lcmDir;
-} CertificateStatusDetailsReport;
-
+} SigningCertificateStatusReport;
 
 
 /**
@@ -161,7 +162,9 @@ typedef struct
  */
 typedef enum
 {
-    SFSB_VALID_CRL = 0x00000001,
+    SFSB_MISSING_SCMS_CERT_STORE    = 0x00000001,
+    SFSB_CORRUPT_SCMS_CERT_STORE    = 0x00000002,
+    SFSB_MISSING_CRL_INDEX          = 0x00000004,
 } SystemFileStatusBitmap;
 
 /**
@@ -170,7 +173,13 @@ typedef enum
  */
 typedef struct
 {
-    uint32_t       status;
+    uint8_t   version;
+    uint32_t status;
+    uint32_t numberOfMissingCrls;
+    uint32_t numberOfCorruptCrls;
+    uint32_t numberOfOverdueCrls;
+    uint32_t numberOfOverdueCrlsForSigning;
+    uint32_t numberOfValidRctls;
 } SystemFileStatusReport;
 
 
@@ -181,10 +190,9 @@ typedef struct
  */
 typedef struct
 {
-    uint8_t           version;
-    AEROLINK_RESULT   maCertificateStatus;
-} MisbehaviorStatusReport;
-
+    uint8_t          version;
+    AEROLINK_RESULT  mbpStatus;
+} MisbehaviorProtectionStatusReport;
 
 #ifdef __cplusplus
 }

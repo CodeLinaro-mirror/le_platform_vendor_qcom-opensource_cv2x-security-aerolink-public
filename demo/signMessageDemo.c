@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -99,10 +99,10 @@ static void updateCallbackFunction(
             printf("    lcm path length: %u\n", data->lcmDirLength);
             printf("    lcm path:        %s\n", (char const*)&data->lcmDir[0]);
         }
-        else if (ARIB_CERTIFICATE_STATUS_DETAILS == id)
+        else if (ARIB_SIGNING_CERTIFICATE_STATUS == id)
         {
-            printf("  report id = ARIB_CERTIFICATE_STATUS_DETAILS\n");
-            CertificateStatusDetailsReport const* data = (CertificateStatusDetailsReport const*)reportData;
+            printf("  report id = ARIB_SIGNING_CERTIFICATE_STATUS\n");
+            SigningCertificateStatusReport const* data = (SigningCertificateStatusReport const*)reportData;
             printf("    version:             0x%08x\n", data->version);
             printf("    status:              0x%08x\n", data->status);
             printf("    lcm path length:     %u\n", data->lcmDirLength);
@@ -116,11 +116,11 @@ static void updateCallbackFunction(
             SystemFileStatusReport const* data = (SystemFileStatusReport const*)reportData;
             printf("    status:          0x%08x\n", data->status);
         }
-        else if (ARIB_MISBEHAVIOR_STATUS == id)
+        else if (ARIB_MISBEHAVIOR_PROTECTION_STATUS == id)
         {
-            printf("  report id = ARIB_MISBEHAVIOR_STATUS\n");
-            MisbehaviorStatusReport const* data = (MisbehaviorStatusReport const*)reportData;
-            printf("    status:          0x%08x (%s)\n", data->maCertificateStatus, ws_errid(data->maCertificateStatus));
+            printf("  report id = ARIB_MISBEHAVIOR_PROTECTION_STATUS\n");
+            MisbehaviorProtectionStatusReport const* data = (MisbehaviorProtectionStatusReport const*)reportData;
+            printf("    status:          0x%08x (%s)\n", data->mbpStatus, ws_errid(data->mbpStatus));
         }
         else
         {
@@ -535,8 +535,8 @@ int main (int argc, char *argv[])
      */
     printf("Register status callback\n");
     result = securityServices_registerReportCallback(
-        (uint32_t)(ARIB_CERTIFICATE_STATUS | ARIB_CERTIFICATE_STATUS_DETAILS | ARIB_SYSTEM_FILE_STATUS |
-                   ARIB_MISBEHAVIOR_STATUS),
+        (uint32_t)(ARIB_CERTIFICATE_STATUS | ARIB_SIGNING_CERTIFICATE_STATUS | ARIB_SYSTEM_FILE_STATUS |
+                   ARIB_MISBEHAVIOR_PROTECTION_STATUS),
         updateCallbackFunction, &testUserData);
     if (result != WS_SUCCESS)
     {
