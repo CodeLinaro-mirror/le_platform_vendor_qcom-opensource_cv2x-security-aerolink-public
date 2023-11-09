@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -78,6 +78,9 @@
     fprintf(stderr, "%s line %d: %s; result=%s\n", \
             __FILE__, __LINE__, text, ws_errid(result))
 
+static void displaySystemFileStatus(void const*  reportData);
+static void displaySigningCertificateStatus(void const *reportData);
+
 #if defined(_WIN32) || defined(_WIN64)
 #define strtok_r strtok_s
 #endif
@@ -91,36 +94,52 @@ static void updateCallbackFunction(
 
     if (reportData)
     {
-        if (ARIB_CERTIFICATE_STATUS == id)
+        if (ARIB_SIGNING_CERTIFICATE_STATUS == id)
         {
-            printf("  report id = ARIB_CERTIFICATE_STATUS\n");
-            CertificateStatusReport const* data = (CertificateStatusReport const*)reportData;
-            printf("    status:          0x%08x\n", data->status);
-            printf("    lcm path length: %u\n", data->lcmDirLength);
-            printf("    lcm path:        %s\n", (char const*)&data->lcmDir[0]);
-        }
-        else if (ARIB_CERTIFICATE_STATUS_DETAILS == id)
-        {
-            printf("  report id = ARIB_CERTIFICATE_STATUS_DETAILS\n");
-            CertificateStatusDetailsReport const* data = (CertificateStatusDetailsReport const*)reportData;
-            printf("    version:             0x%08x\n", data->version);
-            printf("    status:              0x%08x\n", data->status);
-            printf("    lcm path length:     %u\n", data->lcmDirLength);
-            printf("    lcm path:            %s\n", (char const*)&data->lcmDir[0]);
-            printf("    currentPeriodNumberOfCertificates:  0x%08x\n", data->currentPeriodNumberOfCertificates);
-            printf("    nextPeriodNumberOfCertificates:     0x%08x\n", data->nextPeriodNumberOfCertificates);
+            printf("  report id = ARIB_SIGNING_CERTIFICATE_STATUS\n");
+            displaySigningCertificateStatus(reportData);
         }
         else if (ARIB_SYSTEM_FILE_STATUS == id)
         {
             printf("  report id = ARIB_SYSTEM_FILE_STATUS\n");
-            SystemFileStatusReport const* data = (SystemFileStatusReport const*)reportData;
-            printf("    status:          0x%08x\n", data->status);
+            displaySystemFileStatus(reportData);
         }
-        else if (ARIB_MISBEHAVIOR_STATUS == id)
+        else if (ARIB_MISBEHAVIOR_PROTECTION_STATUS == id)
         {
-            printf("  report id = ARIB_MISBEHAVIOR_STATUS\n");
-            MisbehaviorStatusReport const* data = (MisbehaviorStatusReport const*)reportData;
-            printf("    status:          0x%08x (%s)\n", data->maCertificateStatus, ws_errid(data->maCertificateStatus));
+            printf("  report id = ARIB_MISBEHAVIOR_PROTECTION_STATUS\n");
+            MisbehaviorProtectionStatusReport const* data = (MisbehaviorProtectionStatusReport const*)reportData;
+            printf("    status:          0x%08x (%s)\n", data->mbpStatus, ws_errid(data->mbpStatus));
+        }
+        else if (ARIB_SCMS_NETWORK_STATUS == id)
+        {
+            printf("  report id = ARIB_SCMS_NETWORK_STATUS\n");
+            ScmsNetworkStatusReport const* data = (ScmsNetworkStatusReport const*)reportData;
+            printf("    version:           0x%08x\n", data->version);
+            printf("    status:            0x%08x\n", data->status);
+        }
+        else if (ARIB_SCMS_ENROLLMENT_STATUS == id)
+        {
+            printf("  report id = ARIB_SCMS_ENROLLMENT_STATUS\n");
+            ScmsEnrollmentStatusReport const* data = (ScmsEnrollmentStatusReport const*)reportData;
+
+            printf("    version:           0x%08x\n", data->version);
+            printf("    status:            0x%08x\n", data->status);
+            printf("    enrollmentNameLen: %u\n", data->enrollmentNameLength);
+            printf("    enrollmentName:    %s\n", (const char*)&data->enrollmentName[0]);
+        }
+        else if (ARIB_SCMS_SERVICE_STATUS == id)
+        {
+            printf("  report id = ARIB_SCMS_SERVICE_STATUS\n");
+            ScmsServiceStatusReport const* data = (ScmsServiceStatusReport const*)reportData;
+
+            printf("    version:           0x%08x\n", data->version);
+            printf("    status:            0x%08x\n", data->status);
+            printf("    serviceId:         0x%08x\n", data->serviceId);
+            printf("    descLength:        %u\n", data->descLength);
+            if (data->descLength)
+            {
+                printf("    desc:              %s\n", (const char*)&data->desc[0]);
+            }
         }
         else
         {
@@ -129,6 +148,50 @@ static void updateCallbackFunction(
     }
 
     printf("\n");
+}
+
+static void displaySigningCertificateStatus(void const *reportData)
+{
+    SigningCertificateStatusReport const* data = (SigningCertificateStatusReport const*)reportData;
+    printf("    version:             0x%08x\n", data->version);
+    printf("    status:              0x%08x (", data->status);
+
+
+    if ((data->status & SCSB_VALID_CURRENT_CERTS) != 0)  {printf(" ValidCurrentCerts");}
+    if ((data->status & SCSB_CERTS_AVAILABLE) != 0)   {printf(" AvailableCerts ");}
+    if ((data->status & SCSB_HSM_ERROR) != 0)    { printf(" HSMError ");}
+    if ((data->status & SCSB_PRIVATE_PUBLIC_KEY_MISMATCH) != 0)    { printf(" KeyMismatch ");}
+    if ((data->status & SCSB_CERT_IN_CHAIN_MISSING) != 0)    { printf(" CerChaintMissing ");}
+    if ((data->status & SCSB_CERTS_IN_CHAIN_INCONSISTENT) != 0)    { printf(" CertsInconsistent ");}
+    if ((data->status & SCSB_CERT_IN_CHAIN_REVOKED) != 0)    { printf(" RevokedCert ");}
+    printf(")\n");
+
+    printf("    lcm path length:     %u\n", data->lcmDirLength);
+    printf("    lcm path:            %s\n", (char const*)&data->lcmDir[0]);
+    printf("    currentPeriodNumberOfCertificates:  0x%08x\n", data->currentPeriodNumberOfCertificates);
+    printf("    nextPeriodNumberOfCertificates:     0x%08x\n", data->nextPeriodNumberOfCertificates);
+}
+
+static void displaySystemFileStatus(void const*  reportData)
+{
+    SystemFileStatusReport const* data = (SystemFileStatusReport const*)reportData;
+    printf("    version:                      0x%08x\n", data->version);
+    printf("    status                        0x%08x", data->status);
+    if (data->status != 0)
+    {
+        printf(" (");
+        if ((data->status & SFSB_MISSING_SCMS_CERT_STORE) != 0) { printf(" MissingCertStore "); }
+        if ((data->status & SFSB_CORRUPT_SCMS_CERT_STORE) != 0) { printf(" CorruptCertStore "); }
+        if ((data->status & SFSB_MISSING_CRL_INDEX) != 0)       { printf(" MissingCrlIndex "); }
+        if (data->status != 0) printf(")");
+    }
+    printf("\n");
+
+    printf("    numberOfMissingCrls           0x%08x\n", data->numberOfMissingCrls);
+    printf("    numberOfCorruptCrls           0x%08x\n", data->numberOfCorruptCrls);
+    printf("    numberOfOverdueCrls           0x%08x\n", data->numberOfOverdueCrls);
+    printf("    numberOfOverdueCrlsForSigning 0x%08x\n", data->numberOfOverdueCrlsForSigning);
+    printf("    numberOfValidRctls            0x%08x\n", data->numberOfValidRctls);
 }
 
 /*
@@ -535,8 +598,9 @@ int main (int argc, char *argv[])
      */
     printf("Register status callback\n");
     result = securityServices_registerReportCallback(
-        (uint32_t)(ARIB_CERTIFICATE_STATUS | ARIB_CERTIFICATE_STATUS_DETAILS | ARIB_SYSTEM_FILE_STATUS |
-                   ARIB_MISBEHAVIOR_STATUS),
+        (uint32_t)(ARIB_SIGNING_CERTIFICATE_STATUS | ARIB_SYSTEM_FILE_STATUS |
+                   ARIB_MISBEHAVIOR_PROTECTION_STATUS | ARIB_SCMS_NETWORK_STATUS |
+                   ARIB_SCMS_ENROLLMENT_STATUS | ARIB_SCMS_SERVICE_STATUS),
         updateCallbackFunction, &testUserData);
     if (result != WS_SUCCESS)
     {
