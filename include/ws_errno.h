@@ -230,6 +230,7 @@ typedef enum {
      WS_ERR_INVALID_MANIFEST_FILE                        = (139), /* A manifest file has one or more invalid entries. */
      WS_ERR_TRCL_OVERDUE                                 = (140), /* Trusted root CA certificate list is overdue. */
      WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
+     WS_ERR_KEY_MISMATCH                                 = (142), /* Derived public key from private key does not match expected public key */
 
 } AEROLINK_RESULT;
 
