@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -227,6 +227,10 @@ typedef enum {
      WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (136), /* An error with the misbehavior configuration file occurred */
      WS_ERR_NO_ENROLLMENT                                = (137), /* Missing enrollment information */
      WS_ERR_LOAD_CRYPTO_INTERFACE_LIB                    = (138), /* Failed to load crypto interface library and required functions. */
+     WS_ERR_INVALID_MANIFEST_FILE                        = (139), /* A manifest file has one or more invalid entries. */
+     WS_ERR_TRCL_OVERDUE                                 = (140), /* Trusted root CA certificate list is overdue. */
+     WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
+     WS_ERR_KEY_MISMATCH                                 = (142), /* Derived public key from private key does not match expected public key */
 
 } AEROLINK_RESULT;
 
