@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -174,10 +174,10 @@ typedef enum {
      WS_ERR_PKI_INVALID_CONFIG                           = ( 83), /* PKI: Invalid PKI config detected. */
      WS_ERR_PKI_ENCODE_BASE64                            = ( 84), /* PKI: Failed to encode base64. */
      WS_ERR_SAVE_FILE                                    = ( 85), /* Failed to save file. */
-     WS_ERR_UNSUPPORTED_CUSTOM_SERVICE                   = ( 86), /* Unsupported Aerolink service. */
+     WS_ERR_UNSUPPORTED_CUSTOM_SETTINGS_TYPE             = ( 86), /* Unsupported Aerolink custom settings type. */
      WS_ERR_UNSUPPORTED_CUSTOM_SETTING                   = ( 87), /* Unsupported Aerolink custom setting. */
      WS_ERR_INVALID_CUSTOM_SETTING_FORMAT                = ( 88), /* Invalid Aerolink custom setting format. */
-     WS_ERR_SERVICE_DISABLED                             = ( 89), /* The specified service is disabled. */
+     WS_ERR_CUSTOM_SETTINGS_TYPE_DISABLED                = ( 89), /* The specified Aerolink custom settings type is disabled. */
      WS_ERR_INVALID_ENCRYPTION_KEY                       = ( 90), /* Encryption key is invalid. */
      WS_ERR_ENCRYPTION_KEY_NOT_FOUND                     = ( 91), /* Encryption key not found. */
      WS_ERR_CMAC_VERIFICATION_FAILED                     = ( 92), /* CMAC verification failed. */
@@ -226,6 +226,11 @@ typedef enum {
      WS_ERR_NO_FILE                                      = (135), /* File does not exist. */
      WS_ERR_INVALID_MISBEHAVIOR_CONFIG                   = (136), /* An error with the misbehavior configuration file occurred */
      WS_ERR_NO_ENROLLMENT                                = (137), /* Missing enrollment information */
+     WS_ERR_LOAD_CRYPTO_INTERFACE_LIB                    = (138), /* Failed to load crypto interface library and required functions. */
+     WS_ERR_INVALID_MANIFEST_FILE                        = (139), /* A manifest file has one or more invalid entries. */
+     WS_ERR_TRCL_OVERDUE                                 = (140), /* Trusted root CA certificate list is overdue. */
+     WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
+     WS_ERR_KEY_MISMATCH                                 = (142), /* Derived public key from private key does not match expected public key */
 
 } AEROLINK_RESULT;
 
