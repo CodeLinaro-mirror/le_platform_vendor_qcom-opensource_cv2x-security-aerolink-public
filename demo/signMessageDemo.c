@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -183,6 +183,8 @@ static void displaySystemFileStatus(void const*  reportData)
         if ((data->status & SFSB_MISSING_SCMS_CERT_STORE) != 0) { printf(" MissingCertStore "); }
         if ((data->status & SFSB_CORRUPT_SCMS_CERT_STORE) != 0) { printf(" CorruptCertStore "); }
         if ((data->status & SFSB_MISSING_CRL_INDEX) != 0)       { printf(" MissingCrlIndex "); }
+        if ((data->status & SFSB_MISSING_CTL_STATE) != 0)       { printf(" MissingCtlState "); }
+        if ((data->status & SFSB_CORRUPT_CTL_STATE) != 0)       { printf(" CorruptCtlState "); }
         if (data->status != 0) printf(")");
     }
     printf("\n");
@@ -192,6 +194,7 @@ static void displaySystemFileStatus(void const*  reportData)
     printf("    numberOfOverdueCrls           0x%08x\n", data->numberOfOverdueCrls);
     printf("    numberOfOverdueCrlsForSigning 0x%08x\n", data->numberOfOverdueCrlsForSigning);
     printf("    numberOfValidRctls            0x%08x\n", data->numberOfValidRctls);
+    printf("    numberOfUnserviceableRctls    0x%08x\n", data->numberOfUnserviceableRctls);
 }
 
 /*
