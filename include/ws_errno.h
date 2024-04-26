@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -230,7 +230,8 @@ typedef enum {
      WS_ERR_INVALID_MANIFEST_FILE                        = (139), /* A manifest file has one or more invalid entries. */
      WS_ERR_TRCL_OVERDUE                                 = (140), /* Trusted root CA certificate list is overdue. */
      WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
-     WS_ERR_KEY_MISMATCH                                 = (142), /* Derived public key from private key does not match expected public key */
+     WS_ERR_KEY_MISMATCH                                 = (142), /* Public key calculated from private key does not match expected public key */
+     WS_ERR_DEVICE_NOT_INITIALIZED                       = (143), /* The device is not initialized with required SCMS information. */
 
 } AEROLINK_RESULT;
 

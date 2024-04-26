@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -145,6 +145,8 @@ typedef enum
     SFSB_MISSING_SCMS_CERT_STORE    = 0x00000001,
     SFSB_CORRUPT_SCMS_CERT_STORE    = 0x00000002,
     SFSB_MISSING_CRL_INDEX          = 0x00000004,
+    SFSB_MISSING_CTL_STATE          = 0x00000008,
+    SFSB_CORRUPT_CTL_STATE          = 0x00000010,
 } SystemFileStatusBitmap;
 
 /**
@@ -160,6 +162,7 @@ typedef struct
     uint32_t numberOfOverdueCrls;
     uint32_t numberOfOverdueCrlsForSigning;
     uint32_t numberOfValidRctls;
+    uint32_t numberOfUnserviceableRctls;
 } SystemFileStatusReport;
 
 
@@ -284,6 +287,7 @@ typedef enum
     SCMS_SERVICE_SUBMIT_ER,
     SCMS_SERVICE_DOWNLOAD_CCRL_CTL,
     SCMS_SERVICE_DOWNLOAD_CTL,
+    SCMS_SERVICE_DOWNLOAD_CCF,
     SCMS_SERVICE_DOWNLOAD_CA_CERT,
     SCMS_SERVICE_DOWNLOAD_RA_CERT,
     SCMS_SERVICE_DOWNLOAD_MA_CERT,
