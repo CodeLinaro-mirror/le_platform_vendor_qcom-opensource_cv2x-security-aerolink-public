@@ -28,7 +28,7 @@
 #
 #  Changes from Qualcomm Innovation Center are provided under the following license:
 #
-#  Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+#  Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted (subject to the limitations in the
@@ -62,10 +62,28 @@
 
 lcms = [
      {
-          lcm_type                            pseudonym
-          lcm_name                            bsmLcm
-          acf_prefix                          bsm
-          use_scms                            false
-          enable_misbehavior                  false
+          lcm_type                        pseudonym
+          lcm_name                        bsmLcm
+          acf_prefix                      bsm
+          use_scms                        false
+          enable_misbehavior              false
+
+          ### End Entity required fields
+          enrollment_config_name          enroll1                 # The matching enrollment definition name
+          app_permissions                 "0x20"
+          curve                           NISTP256                     # Only SM2 is supported for CCSA
+          num_validity_periods            10
+
+          certificate_type                implicit
+          key_type                        original
+          #encrypt_cert_request           true
+          encrypt_download_request        true
+          pki_configuration               pkiserv
+          certId                          L
+
+          iperiod_start                   "2015-01-06"
+          iperiod_start_value             0
+          duration                        168h
+          overlap                         1h
      }
 ]
