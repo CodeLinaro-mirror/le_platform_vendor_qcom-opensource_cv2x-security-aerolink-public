@@ -25,6 +25,41 @@
 *  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 *  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 *  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*
+*  Changes from Qualcomm Innovation Center are provided under the following license:
+*
+*  Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted (subject to the limitations in the
+*  disclaimer below) provided that the following conditions are met:
+*
+*      * Redistributions of source code must retain the above copyright
+*        notice, this list of conditions and the following disclaimer.
+*
+*      * Redistributions in binary form must reproduce the above
+*        copyright notice, this list of conditions and the following
+*        disclaimer in the documentation and/or other materials provided
+*        with the distribution.
+*
+*      * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+*        contributors may be used to endorse or promote products derived
+*        from this software without specific prior written permission.
+*
+*  NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+*  GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+*  HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+*  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+*  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+*  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+*  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+*  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+*  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+*  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+*  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /*
@@ -38,7 +73,7 @@
 #include "viicsec.h"
 
 #define LOG(text, result)                         \
-    printf("%s line %d: %s; result=%s\n", \
+    (void) printf("%s line %d: %s; result=%s\n", \
             __FILE__, __LINE__, text, ws_errid(result))
 
 
@@ -49,13 +84,13 @@ static void printBytes(char *label, uint8_t const buffer[], uint32_t length)
 {
     uint32_t i = 0;
 
-    printf("%s", label);
+    (void) printf("%s", label);
 
     for( i = 0; i < length; i++ ) {
-        printf("%02x ", buffer[i] & 0xffU);
+        (void) printf("%02x ", buffer[i] & 0xffU);
     }
 
-    printf("\n");
+    (void) printf("\n");
 }
 
 
@@ -140,21 +175,21 @@ int main (int argc, char *argv[])
                 }
                 else
                 {
-                    printf("Invalid argument provided: -curveChoice requires one of the following strings: nistp256, brainpoolp256r1, or sm2.\n");
+                    (void) printf("Invalid argument provided: -curveChoice requires one of the following strings: nistp256, brainpoolp256r1, or sm2.\n");
                     return 2;
                 }
                 i++;
             }
             else
             {
-                printf("Invalid argument: -curveChoice requires one of the following strings: nistp256, brainpoolp256r1, or sm2.\n");
+                (void) printf("Invalid argument: -curveChoice requires one of the following strings: nistp256, brainpoolp256r1, or sm2.\n");
                 return 3;
             }
         }
 
         else
         {
-            printf("Invalid argument: %s is not supported\n", argv[i]);
+            (void) printf("Invalid argument: %s is not supported\n", argv[i]);
             return 4;
         }
     }
@@ -162,13 +197,13 @@ int main (int argc, char *argv[])
     /*
      * Get the library version.
      */
-    printf("\nLibrary version is '%s'\n", securityServices_getVersion());
+    (void) printf("\nLibrary version is '%s'\n", securityServices_getVersion());
 
 
     /*
      * Initialize security services.
      */
-    printf ("\nInitializing security services\n");
+    (void) printf ("\nInitializing security services\n");
     result = securityServices_initialize();
     if (result != WS_SUCCESS)
     {
@@ -180,7 +215,7 @@ int main (int argc, char *argv[])
     /*
      * Open application's security context.
      */
-    printf("Opening security context\n");
+    (void) printf("Opening security context\n");
     result = sc_open(contextName, &context);
     if (result != WS_SUCCESS)
     {
@@ -193,7 +228,7 @@ int main (int argc, char *argv[])
     /*
      * Create Secured Message Generator.
      */
-    printf("Creating a secured message generator\n");
+    (void) printf("Creating a secured message generator\n");
     result = smg_new(context, &smg);
     if (result != WS_SUCCESS)
     {
@@ -207,7 +242,7 @@ int main (int argc, char *argv[])
     /*
      * Create Secured Message Parser.
      */
-    printf("Creating a secured message parser\n");
+    (void) printf("Creating a secured message parser\n");
     result = smp_new(context, &smp);
     if (result != WS_SUCCESS)
     {
@@ -221,7 +256,7 @@ int main (int argc, char *argv[])
     /*
      * Generate encryption keypair.
      */
-    printf ("Creating public encryption key pair\n");
+    (void) printf ("Creating public encryption key pair\n");
     result = securityServices_generatePublicEncryptionKeyPair(publicEncryptionAlg, &encryptionKey);
     if (result != WS_SUCCESS)
     {
@@ -242,7 +277,7 @@ int main (int argc, char *argv[])
     /*
      * Generate encrypted data.
      */
-    printf("\nEncrypting data\n");
+    (void) printf("\nEncrypting data\n");
     AerolinkEncryptionKey const * recipients[] =  {&encryptionKey};
     size_t numRecipients = sizeof recipients / sizeof recipients[0];
     result = smg_encrypt(smg, recipients, numRecipients,
@@ -259,7 +294,7 @@ int main (int argc, char *argv[])
         return result;
     }
 
-    printf("Encrypted data generated correctly\n");
+    (void) printf("Encrypted data generated correctly\n");
     if (printMessage)
     {
         printBytes("\nEncrypted data is:\n  ",
@@ -271,8 +306,8 @@ int main (int argc, char *argv[])
     /*
      * Process the encrypted data.
      */
-    printf("\nProcessing \"received\" encrypted message\n");
-    printf("Parsing encrypted message\n");
+    (void) printf("\nProcessing \"received\" encrypted message\n");
+    (void) printf("Parsing encrypted message\n");
     result = smp_extract(smp,
                          encryptedData, encryptedDataLength, &spduType,
                          &receivedMessage, &receivedMessageLength, &payloadType,
@@ -291,7 +326,7 @@ int main (int argc, char *argv[])
 
     else
     {
-        printf("Message decrypted\n");
+        (void) printf("Message decrypted\n");
 
         if ((receivedMessageLength != plainTextLength) ||
             (strncmp((char *) plainText, (char *) receivedMessage, receivedMessageLength) != 0))
@@ -320,7 +355,7 @@ int main (int argc, char *argv[])
     }
     else
     {
-        printf("Input SPDU type = PLT_ENCRYPTED_SPDU\n");
+        (void) printf("Input SPDU type = PLT_ENCRYPTED_SPDU\n");
     }
     if (payloadType != PLT_SIGNED_SPDU)
     {
@@ -335,14 +370,14 @@ int main (int argc, char *argv[])
     }
     else
     {
-        printf("Output payload type = PLT_SIGNED_SPDU\n");
+        (void) printf("Output payload type = PLT_SIGNED_SPDU\n");
     }
 
 
     /*
      * Delete encryption key.
      */
-    printf ("\nDeleting encryption key\n");
+    (void) printf ("\nDeleting encryption key\n");
     result = securityServices_deleteEncryptionKey(&encryptionKey);
     if (result != WS_SUCCESS)
     {
@@ -366,7 +401,7 @@ int main (int argc, char *argv[])
     /*
      * Delete secured message generator.
      */
-    printf("Deleting secured message generator\n");
+    (void) printf("Deleting secured message generator\n");
     result = smg_delete(smg);
     if (result != WS_SUCCESS)
     {
@@ -381,7 +416,7 @@ int main (int argc, char *argv[])
     /*
      * Delete secured message parser.
      */
-    printf("Deleting secured message parser\n");
+    (void) printf("Deleting secured message parser\n");
     result = smp_delete(smp);
     if (result != WS_SUCCESS)
     {
@@ -395,7 +430,7 @@ int main (int argc, char *argv[])
     /*
      * Close security context.
      */
-    printf("Closing security context\n");
+    (void) printf("Closing security context\n");
     result = sc_close(context);
     if (result != WS_SUCCESS)
     {
@@ -407,13 +442,13 @@ int main (int argc, char *argv[])
     /*
      * Shutdown security services.
      */
-    printf("Shutting down security services\n");
+    (void) printf("Shutting down security services\n");
     result = securityServices_shutdown();
     if (result != WS_SUCCESS)
     {
         LOG("Error shutting down security services", result);
     }
 
-    printf("\n");
+    (void) printf("\n");
     return result;
 }
