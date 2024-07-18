@@ -62,7 +62,7 @@
 *  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* `ws_errno.h'
+/* 'ws_errno.h'
  *
  * AUTOMATICALLY GENERATED -- DO NOT EDIT
  *
@@ -70,8 +70,8 @@
  *
  */
 
-#ifndef _WS_ERRNO_H /* Prevent multiple inclusion */
-#define _WS_ERRNO_H
+#ifndef WS_ERRNO_H
+#define WS_ERRNO_H
 
 #include <aerolink_api.h>
 
@@ -239,4 +239,4 @@ typedef enum {
 }
 #endif
 
-#endif /* ndef _WS_ERRNO_H */
+#endif /* WS_ERRNO_H */
