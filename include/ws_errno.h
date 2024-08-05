@@ -232,6 +232,7 @@ typedef enum {
      WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
      WS_ERR_KEY_MISMATCH                                 = (142), /* Public key calculated from private key does not match expected public key */
      WS_ERR_DEVICE_NOT_INITIALIZED                       = (143), /* The device is not initialized with required SCMS information. */
+     WS_ERR_HSM_SEC_LEVEL                                = (144), /* The security on the current session to the HSM in insufficient to perform requested operation. */
 
 } AEROLINK_RESULT;
 
