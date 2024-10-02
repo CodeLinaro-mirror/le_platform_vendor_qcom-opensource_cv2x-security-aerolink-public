@@ -233,6 +233,8 @@ typedef enum {
      WS_ERR_KEY_MISMATCH                                 = (142), /* Public key calculated from private key does not match expected public key */
      WS_ERR_DEVICE_NOT_INITIALIZED                       = (143), /* The device is not initialized with required SCMS information. */
      WS_ERR_HSM_SEC_LEVEL                                = (144), /* The security on the current session to the HSM in insufficient to perform requested operation. */
+     WS_ERR_CTL_TIMES_INCONSISTENT                       = (145), /* The effectiveDate of the CTL is earlier than the effectiveDate of its predecessor */
+     WS_ERR_CTL_IN_FUTURE                                = (146), /* The effectiveDate of the CTL is in the future */
 
 } AEROLINK_RESULT;
 
