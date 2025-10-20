@@ -24,6 +24,10 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 #  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 #  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#  Changes from Qualcomm Innovation Center are provided under the following license:
+#  Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+#  SPDX-License-Identifier: BSD-3-Clause-Clear
 
 ### Configuration for BSM (Basic Safety Message from OBU) security profile
 ### per SAE J2945/1.
@@ -90,5 +94,5 @@ overdue_crl_tolerance               94670856    # BSM profile requires 3 years
 
 # Set if and how certificates are requested and provided if unknown to the
 # receiver.  Choices are none, inline, out_of_band.
-p2pcd_flavor                     out_of_band    # optional for BSM, but should
+p2pcd_flavor                            none    # optional for BSM, but should
                                                 # be out_of_band if used

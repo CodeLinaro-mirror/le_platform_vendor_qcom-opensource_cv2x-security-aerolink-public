@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -62,7 +62,7 @@
 *  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* `ws_errno.h'
+/* 'ws_errno.h'
  *
  * AUTOMATICALLY GENERATED -- DO NOT EDIT
  *
@@ -70,8 +70,8 @@
  *
  */
 
-#ifndef _WS_ERRNO_H /* Prevent multiple inclusion */
-#define _WS_ERRNO_H
+#ifndef WS_ERRNO_H
+#define WS_ERRNO_H
 
 #include <aerolink_api.h>
 
@@ -230,7 +230,11 @@ typedef enum {
      WS_ERR_INVALID_MANIFEST_FILE                        = (139), /* A manifest file has one or more invalid entries. */
      WS_ERR_TRCL_OVERDUE                                 = (140), /* Trusted root CA certificate list is overdue. */
      WS_ERR_TDCL_OVERDUE                                 = (141), /* Trusted domain CA certificate list is overdue. */
-     WS_ERR_KEY_MISMATCH                                 = (142), /* Derived public key from private key does not match expected public key */
+     WS_ERR_KEY_MISMATCH                                 = (142), /* Public key calculated from private key does not match expected public key */
+     WS_ERR_DEVICE_NOT_INITIALIZED                       = (143), /* The device is not initialized with required SCMS information. */
+     WS_ERR_HSM_SEC_LEVEL                                = (144), /* The security on the current session to the HSM in insufficient to perform requested operation. */
+     WS_ERR_CTL_TIMES_INCONSISTENT                       = (145), /* The effectiveDate of the CTL is earlier than the effectiveDate of its predecessor */
+     WS_ERR_CTL_IN_FUTURE                                = (146), /* The effectiveDate of the CTL is in the future */
 
 } AEROLINK_RESULT;
 
@@ -238,4 +242,4 @@ typedef enum {
 }
 #endif
 
-#endif /* ndef _WS_ERRNO_H */
+#endif /* WS_ERRNO_H */

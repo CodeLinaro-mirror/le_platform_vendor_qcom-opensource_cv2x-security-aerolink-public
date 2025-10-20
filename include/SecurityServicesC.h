@@ -390,6 +390,24 @@ securityServices_idChangeLock(void);
 AEROLINK_EXPORT AEROLINK_RESULT
 securityServices_idChangeUnlock(void);
 
+
+/**
+ * @brief Change the log level settings.
+ *
+ * @return AEROLINK_RESULT
+ *
+ * @retval WS_SUCCESS
+ *     - operation was successful
+ *
+ * @retval WS_ERR_BAD_ARGS
+ *     - The input trace level is invalid in some way.
+ *
+ * @retval WS_ERR_SAVE_FILE
+ *     - Changing the trace level requires opening the log file, and that failed.
+ */
+AEROLINK_EXPORT AEROLINK_RESULT
+securityServices_setTraceLevels(char const *newTraceLevel);
+
 #ifdef __cplusplus
 }
 #endif

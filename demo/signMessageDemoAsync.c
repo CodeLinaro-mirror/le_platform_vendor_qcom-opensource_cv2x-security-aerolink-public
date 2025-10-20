@@ -25,6 +25,41 @@
 *  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 *  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 *  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*
+*  Changes from Qualcomm Innovation Center are provided under the following license:
+*
+*  Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted (subject to the limitations in the
+*  disclaimer below) provided that the following conditions are met:
+*
+*      * Redistributions of source code must retain the above copyright
+*        notice, this list of conditions and the following disclaimer.
+*
+*      * Redistributions in binary form must reproduce the above
+*        copyright notice, this list of conditions and the following
+*        disclaimer in the documentation and/or other materials provided
+*        with the distribution.
+*
+*      * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+*        contributors may be used to endorse or promote products derived
+*        from this software without specific prior written permission.
+*
+*  NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+*  GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+*  HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+*  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+*  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+*  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+*  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+*  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+*  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+*  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+*  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /*
@@ -40,7 +75,7 @@
 #include "viicsec.h"
 
 #define LOG(text, result)                         \
-    fprintf(stderr, "%s line %d: %s; result=%s\n", \
+    (void) fprintf(stderr, "%s line %d: %s; result=%s\n", \
             __FILE__, __LINE__, text, ws_errid(result))
 
 /*
@@ -50,13 +85,13 @@ static void printBytes(char *label, uint8_t *buffer, uint32_t length)
 {
     uint32_t i = 0;
 
-    printf("%s", label);
+    (void) printf("%s", label);
 
     for( i = 0; i < length; i++ ) {
-        printf("%02x ", buffer[i] & 0xff);
+        (void) printf("%02x ", buffer[i] & 0xff);
     }
 
-    printf("\n");
+    (void) printf("\n");
 }
 
 
@@ -140,19 +175,19 @@ generateSignedMessage(
      */
     while (!signCallbackCalled)
     {
-        printf("Waiting for the sign callback to fire, taking a short nap\n");
+        (void) printf("Waiting for the sign callback to fire, taking a short nap\n");
         sleep(1);
     }
     signCallbackCalled = 0;
 
     if (signCallbackStatus != WS_SUCCESS)
     {
-        printf("failed to generate the messaage error=%d(%s)\n", signCallbackStatus, ws_errid(signCallbackStatus));
+        (void) printf("failed to generate the messaage error=%d(%s)\n", signCallbackStatus, ws_errid(signCallbackStatus));
         return signCallbackStatus;
     }
     else
     {
-        printf("Signed message generated correctly\n");
+        (void) printf("Signed message generated correctly\n");
         if (printMessage)
             printBytes("\nSigned message is:\n  ", signCallbackData, signCallbackDataLen);
     }
@@ -207,8 +242,8 @@ processSignedMessage(
     /*
      * Process secured message.
      */
-    printf("\nProcessing \"received\" secured message\n");
-    printf("Parsing secured message\n");
+    (void) printf("\nProcessing \"received\" secured message\n");
+    (void) printf("Parsing secured message\n");
     result = smp_extract(smp,
                          signedMessage, signedMessageLength, spduType,
                          receivedMessage, receivedMessageLength, payloadType,
@@ -223,7 +258,7 @@ processSignedMessage(
      * Set generation location "from" the message payload since it's not
      * in the security headers.
      */
-    printf("Setting generation location\n");
+    (void) printf("Setting generation location\n");
     genTimeLatitude = 0x323c4650;
     genTimeLongitude = 0x01020304;
     genTimeElevation = 0x0020;
@@ -237,7 +272,7 @@ processSignedMessage(
     /*
      * Check relevance.
      */
-    printf("Checking message relevance\n");
+    (void) printf("Checking message relevance\n");
     result = smp_checkRelevance(smp);
     if (result != WS_SUCCESS)
     {
@@ -247,7 +282,7 @@ processSignedMessage(
     /*
      * Check consistency.
      */
-    printf("Checking message and certificates' consistency\n");
+    (void) printf("Checking message and certificates' consistency\n");
     result = smp_checkConsistency(smp);
     if (result != WS_SUCCESS)
     {
@@ -260,7 +295,7 @@ processSignedMessage(
      * This is a sample call of the async interface only.
      * This is not how a real application using a callback should be structured.
      */
-    printf("Verifying message and certificates' signatures\n");
+    (void) printf("Verifying message and certificates' signatures\n");
     result = smp_verifySignaturesAsync(smp, userData, validateCallback);
     if (result != WS_SUCCESS)
     {
@@ -272,14 +307,14 @@ processSignedMessage(
      */
     while (!validateCallbackCalled)
     {
-        printf("Waiting for the validate callback to fire, taking a short nap\n");
+        (void) printf("Waiting for the validate callback to fire, taking a short nap\n");
         sleep(1);
     }
 
     validateCallbackCalled = 0;
     if (validateCallbackStatus == WS_SUCCESS)
     {
-        printf("Message is valid\n");
+        (void) printf("Message is valid\n");
     }
 
     return validateCallbackStatus;
@@ -354,7 +389,7 @@ int main (int argc, char **argv)
         if( strcmp("-ssp", argv[i]) == 0 )
         {
             char *inputSsp = argv[++i];
-            printf ("ssp = %s\n", inputSsp);
+            (void) printf ("ssp = %s\n", inputSsp);
             char *rest = inputSsp;
             char *end;
 
@@ -371,12 +406,12 @@ int main (int argc, char **argv)
     /*
      * Get the library version.
      */
-    printf("\nLibrary version is '%s'\n", securityServices_getVersion());
+    (void) printf("\nLibrary version is '%s'\n", securityServices_getVersion());
 
     /*
      * Initialize security services.
      */
-    printf ("\nInitializing security services\n");
+    (void) printf ("\nInitializing security services\n");
     result = securityServices_initialize();
     if (result != WS_SUCCESS)
     {
@@ -387,7 +422,7 @@ int main (int argc, char **argv)
     /*
      * Set the number of leap seconds since 1/1/2004.
      */
-    printf ("Setting leap seconds\n");
+    (void) printf ("Setting leap seconds\n");
     leapSeconds = 5;
     result = securityServices_setTimeAdjustment(leapSeconds);
     if (result != WS_SUCCESS)
@@ -400,7 +435,7 @@ int main (int argc, char **argv)
     /*
      * Set the current position.
      */
-    printf ("Setting current position\n");
+    (void) printf ("Setting current position\n");
     latitude = 0x323c4650;
     longitude = 0x01020304;
     elevation = 0x20;
@@ -416,7 +451,7 @@ int main (int argc, char **argv)
     /*
      * Open application's security context.
      */
-    printf ("Opening security context\n");
+    (void) printf ("Opening security context\n");
     result = sc_open(contextName, &context);
     if (result != WS_SUCCESS)
     {
@@ -440,13 +475,13 @@ int main (int argc, char **argv)
             return result;
         }
 
-        printf("The name of the security context is '%s'\n", name);
+        (void) printf("The name of the security context is '%s'\n", name);
     }
 
     /*
      * Create Secured Message Generator
      */
-    printf ("Creating a secured message generator\n");
+    (void) printf ("Creating a secured message generator\n");
     result = smg_new(context, &smg);
     if (result != WS_SUCCESS)
     {
@@ -459,7 +494,7 @@ int main (int argc, char **argv)
     /*
      * Create Secured Message Parser
      */
-    printf ("Creating a secured message parser\n");
+    (void) printf ("Creating a secured message parser\n");
     result = smp_new(context, &smp);
     if (result != WS_SUCCESS)
     {
@@ -473,7 +508,7 @@ int main (int argc, char **argv)
     /*
      * Generate signed message
      */
-    printf("\nSigning the message\n");
+    (void) printf("\nSigning the message\n");
 
 
     if (userProvidedPsidValue > 0)
@@ -484,7 +519,7 @@ int main (int argc, char **argv)
     if (userProvidedSspLength > 0)
     {
         sspLength = userProvidedSspLength;
-        memcpy(sspValue, userProvidedSspValue, userProvidedSspLength);
+        (void) memcpy(sspValue, userProvidedSspValue, userProvidedSspLength);
     }
 
     result = generateSignedMessage(smg, psidValue, sspValue, sspLength,
@@ -530,18 +565,18 @@ int main (int argc, char **argv)
         return result;
     }
 
-    printf("\nCleaning up\n");
+    (void) printf("\nCleaning up\n");
 
     /* Delete secured message generator. */
-    printf("Deleting secured message generator\n");
+    (void) printf("Deleting secured message generator\n");
     smg_delete(smg);
 
     /* Delete secured message parser. */
-    printf("Deleting secured message parser\n");
+    (void) printf("Deleting secured message parser\n");
     smp_delete(smp);
 
     /* Close security context. */
-    printf("Closing security context\n");
+    (void) printf("Closing security context\n");
     result = sc_close(context);
     if (result != WS_SUCCESS)
     {
@@ -551,14 +586,14 @@ int main (int argc, char **argv)
     }
 
     /* Shutdown security services. */
-    printf("Shutting down security services\n");
+    (void) printf("Shutting down security services\n");
     result = securityServices_shutdown();
     if (result != WS_SUCCESS)
     {
         LOG("Error shutting down security services", result);
         return result;
     }
-    printf("\n");
+    (void) printf("\n");
 
     return WS_SUCCESS;
 }

@@ -29,7 +29,7 @@
 *
 *  Changes from Qualcomm Innovation Center are provided under the following license:
 *
-*  Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+*  Copyright (c) 2021, 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted (subject to the limitations in the
@@ -75,7 +75,7 @@
 #include "viicsec.h"
 
 #define LOG(text, result)                         \
-    fprintf(stderr, "%s line %d: %s; result=%s\n", \
+    (void) fprintf(stderr, "%s line %d: %s; result=%s\n", \
             __FILE__, __LINE__, text, ws_errid(result))
 
 static void displaySystemFileStatus(void const*  reportData);
@@ -90,108 +90,111 @@ static void updateCallbackFunction(
     void const*               reportData,
     void                    * userData)
 {
-    printf("\nupdateCallbackFunction called\n");
+    (void) printf("\nupdateCallbackFunction called\n");
 
     if (reportData)
     {
         if (ARIB_SIGNING_CERTIFICATE_STATUS == id)
         {
-            printf("  report id = ARIB_SIGNING_CERTIFICATE_STATUS\n");
+            (void) printf("  report id = ARIB_SIGNING_CERTIFICATE_STATUS\n");
             displaySigningCertificateStatus(reportData);
         }
         else if (ARIB_SYSTEM_FILE_STATUS == id)
         {
-            printf("  report id = ARIB_SYSTEM_FILE_STATUS\n");
+            (void) printf("  report id = ARIB_SYSTEM_FILE_STATUS\n");
             displaySystemFileStatus(reportData);
         }
         else if (ARIB_MISBEHAVIOR_PROTECTION_STATUS == id)
         {
-            printf("  report id = ARIB_MISBEHAVIOR_PROTECTION_STATUS\n");
+            (void) printf("  report id = ARIB_MISBEHAVIOR_PROTECTION_STATUS\n");
             MisbehaviorProtectionStatusReport const* data = (MisbehaviorProtectionStatusReport const*)reportData;
-            printf("    status:          0x%08x (%s)\n", data->mbpStatus, ws_errid(data->mbpStatus));
+            (void) printf("    status:          0x%08x (%s)\n", data->mbpStatus, ws_errid(data->mbpStatus));
         }
         else if (ARIB_SCMS_NETWORK_STATUS == id)
         {
-            printf("  report id = ARIB_SCMS_NETWORK_STATUS\n");
+            (void) printf("  report id = ARIB_SCMS_NETWORK_STATUS\n");
             ScmsNetworkStatusReport const* data = (ScmsNetworkStatusReport const*)reportData;
-            printf("    version:           0x%08x\n", data->version);
-            printf("    status:            0x%08x\n", data->status);
+            (void) printf("    version:           0x%08x\n", data->version);
+            (void) printf("    status:            0x%08x\n", data->status);
         }
         else if (ARIB_SCMS_ENROLLMENT_STATUS == id)
         {
-            printf("  report id = ARIB_SCMS_ENROLLMENT_STATUS\n");
+            (void) printf("  report id = ARIB_SCMS_ENROLLMENT_STATUS\n");
             ScmsEnrollmentStatusReport const* data = (ScmsEnrollmentStatusReport const*)reportData;
 
-            printf("    version:           0x%08x\n", data->version);
-            printf("    status:            0x%08x\n", data->status);
-            printf("    enrollmentNameLen: %u\n", data->enrollmentNameLength);
-            printf("    enrollmentName:    %s\n", (const char*)&data->enrollmentName[0]);
+            (void) printf("    version:           0x%08x\n", data->version);
+            (void) printf("    status:            0x%08x\n", data->status);
+            (void) printf("    enrollmentNameLen: %u\n", data->enrollmentNameLength);
+            (void) printf("    enrollmentName:    %s\n", (const char*)&data->enrollmentName[0]);
         }
         else if (ARIB_SCMS_SERVICE_STATUS == id)
         {
-            printf("  report id = ARIB_SCMS_SERVICE_STATUS\n");
+            (void) printf("  report id = ARIB_SCMS_SERVICE_STATUS\n");
             ScmsServiceStatusReport const* data = (ScmsServiceStatusReport const*)reportData;
 
-            printf("    version:           0x%08x\n", data->version);
-            printf("    status:            0x%08x\n", data->status);
-            printf("    serviceId:         0x%08x\n", data->serviceId);
-            printf("    descLength:        %u\n", data->descLength);
+            (void) printf("    version:           0x%08x\n", data->version);
+            (void) printf("    status:            0x%08x\n", data->status);
+            (void) printf("    serviceId:         0x%08x\n", data->serviceId);
+            (void) printf("    descLength:        %u\n", data->descLength);
             if (data->descLength)
             {
-                printf("    desc:              %s\n", (const char*)&data->desc[0]);
+                (void) printf("    desc:              %s\n", (const char*)&data->desc[0]);
             }
         }
         else
         {
-            printf("  Unknown report id = %u\n", id);
+            (void) printf("  Unknown report id = %u\n", id);
         }
     }
 
-    printf("\n");
+    (void) printf("\n");
 }
 
 static void displaySigningCertificateStatus(void const *reportData)
 {
     SigningCertificateStatusReport const* data = (SigningCertificateStatusReport const*)reportData;
-    printf("    version:             0x%08x\n", data->version);
-    printf("    status:              0x%08x (", data->status);
+    (void) printf("    version:             0x%08x\n", data->version);
+    (void) printf("    status:              0x%08x (", data->status);
 
 
-    if ((data->status & SCSB_VALID_CURRENT_CERTS) != 0)  {printf(" ValidCurrentCerts");}
-    if ((data->status & SCSB_CERTS_AVAILABLE) != 0)   {printf(" AvailableCerts ");}
-    if ((data->status & SCSB_HSM_ERROR) != 0)    { printf(" HSMError ");}
-    if ((data->status & SCSB_PRIVATE_PUBLIC_KEY_MISMATCH) != 0)    { printf(" KeyMismatch ");}
-    if ((data->status & SCSB_CERT_IN_CHAIN_MISSING) != 0)    { printf(" CerChaintMissing ");}
-    if ((data->status & SCSB_CERTS_IN_CHAIN_INCONSISTENT) != 0)    { printf(" CertsInconsistent ");}
-    if ((data->status & SCSB_CERT_IN_CHAIN_REVOKED) != 0)    { printf(" RevokedCert ");}
-    printf(")\n");
+    if ((data->status & SCSB_VALID_CURRENT_CERTS) != 0)  {(void) printf(" ValidCurrentCerts");}
+    if ((data->status & SCSB_CERTS_AVAILABLE) != 0)   {(void) printf(" AvailableCerts ");}
+    if ((data->status & SCSB_HSM_ERROR) != 0)    { (void) printf(" HSMError ");}
+    if ((data->status & SCSB_PRIVATE_PUBLIC_KEY_MISMATCH) != 0)    { (void) printf(" KeyMismatch ");}
+    if ((data->status & SCSB_CERT_IN_CHAIN_MISSING) != 0)    { (void) printf(" CerChaintMissing ");}
+    if ((data->status & SCSB_CERTS_IN_CHAIN_INCONSISTENT) != 0)    { (void) printf(" CertsInconsistent ");}
+    if ((data->status & SCSB_CERT_IN_CHAIN_REVOKED) != 0)    { (void) printf(" RevokedCert ");}
+    (void) printf(")\n");
 
-    printf("    lcm path length:     %u\n", data->lcmDirLength);
-    printf("    lcm path:            %s\n", (char const*)&data->lcmDir[0]);
-    printf("    currentPeriodNumberOfCertificates:  0x%08x\n", data->currentPeriodNumberOfCertificates);
-    printf("    nextPeriodNumberOfCertificates:     0x%08x\n", data->nextPeriodNumberOfCertificates);
+    (void) printf("    lcm path length:     %u\n", data->lcmDirLength);
+    (void) printf("    lcm path:            %s\n", (char const*)&data->lcmDir[0]);
+    (void) printf("    currentPeriodNumberOfCertificates:  0x%08x\n", data->currentPeriodNumberOfCertificates);
+    (void) printf("    nextPeriodNumberOfCertificates:     0x%08x\n", data->nextPeriodNumberOfCertificates);
 }
 
 static void displaySystemFileStatus(void const*  reportData)
 {
     SystemFileStatusReport const* data = (SystemFileStatusReport const*)reportData;
-    printf("    version:                      0x%08x\n", data->version);
-    printf("    status                        0x%08x", data->status);
+    (void) printf("    version:                      0x%08x\n", data->version);
+    (void) printf("    status                        0x%08x", data->status);
     if (data->status != 0)
     {
-        printf(" (");
-        if ((data->status & SFSB_MISSING_SCMS_CERT_STORE) != 0) { printf(" MissingCertStore "); }
-        if ((data->status & SFSB_CORRUPT_SCMS_CERT_STORE) != 0) { printf(" CorruptCertStore "); }
-        if ((data->status & SFSB_MISSING_CRL_INDEX) != 0)       { printf(" MissingCrlIndex "); }
-        if (data->status != 0) printf(")");
+        (void) printf(" (");
+        if ((data->status & SFSB_MISSING_SCMS_CERT_STORE) != 0) { (void) printf(" MissingCertStore "); }
+        if ((data->status & SFSB_CORRUPT_SCMS_CERT_STORE) != 0) { (void) printf(" CorruptCertStore "); }
+        if ((data->status & SFSB_MISSING_CRL_INDEX) != 0)       { (void) printf(" MissingCrlIndex "); }
+        if ((data->status & SFSB_MISSING_CTL_STATE) != 0)       { (void) printf(" MissingCtlState "); }
+        if ((data->status & SFSB_CORRUPT_CTL_STATE) != 0)       { (void) printf(" CorruptCtlState "); }
+        if (data->status != 0) (void) printf(")");
     }
-    printf("\n");
+    (void) printf("\n");
 
-    printf("    numberOfMissingCrls           0x%08x\n", data->numberOfMissingCrls);
-    printf("    numberOfCorruptCrls           0x%08x\n", data->numberOfCorruptCrls);
-    printf("    numberOfOverdueCrls           0x%08x\n", data->numberOfOverdueCrls);
-    printf("    numberOfOverdueCrlsForSigning 0x%08x\n", data->numberOfOverdueCrlsForSigning);
-    printf("    numberOfValidRctls            0x%08x\n", data->numberOfValidRctls);
+    (void) printf("    numberOfMissingCrls           0x%08x\n", data->numberOfMissingCrls);
+    (void) printf("    numberOfCorruptCrls           0x%08x\n", data->numberOfCorruptCrls);
+    (void) printf("    numberOfOverdueCrls           0x%08x\n", data->numberOfOverdueCrls);
+    (void) printf("    numberOfOverdueCrlsForSigning 0x%08x\n", data->numberOfOverdueCrlsForSigning);
+    (void) printf("    numberOfValidRctls            0x%08x\n", data->numberOfValidRctls);
+    (void) printf("    numberOfUnserviceableRctls    0x%08x\n", data->numberOfUnserviceableRctls);
 }
 
 /*
@@ -201,13 +204,13 @@ static void printBytes(char *label, uint8_t buffer[], uint32_t length)
 {
     uint32_t i = 0;
 
-    printf("%s (%d bytes): ", label, length);
+    (void) printf("%s (%d bytes): ", label, length);
 
     for( i = 0; i < length; i++ ) {
-        printf("%02x ", buffer[i] & 0xffU);
+        (void) printf("%02x ", buffer[i] & 0xffU);
     }
 
-    printf("\n");
+    (void) printf("\n");
 }
 
 static AEROLINK_RESULT
@@ -234,8 +237,8 @@ processSignedMessage(
     /*
      * Process secured message.
      */
-    printf("\nProcessing \"received\" secured message\n");
-    printf("Parsing secured message\n");
+    (void) printf("\nProcessing \"received\" secured message\n");
+    (void) printf("Parsing secured message\n");
     result = smp_extract(smp,
                          signedMessage, signedMessageLength, spduType,
                          receivedMessage, receivedMessageLength, payloadType,
@@ -250,7 +253,7 @@ processSignedMessage(
      * Set generation location "from" the message payload since it's not
      * in the security headers.
      */
-    printf("Setting generation location\n");
+    (void) printf("Setting generation location\n");
     genTimeLatitude = 0x323c4650;
     genTimeLongitude = 0x01020304;
     genTimeElevation = 0x0020;
@@ -264,7 +267,7 @@ processSignedMessage(
     /*
      * Check relevance.
      */
-    printf("Checking message relevance\n");
+    (void) printf("Checking message relevance\n");
     result = smp_checkRelevance(smp);
     if (result != WS_SUCCESS)
     {
@@ -274,7 +277,7 @@ processSignedMessage(
     /*
      * Check consistency.
      */
-    printf("Checking message and certificates' consistency\n");
+    (void) printf("Checking message and certificates' consistency\n");
     result = smp_checkConsistency(smp);
     if (result != WS_SUCCESS)
     {
@@ -284,14 +287,14 @@ processSignedMessage(
     /*
      * Verify signatures.
      */
-    printf("Verifying message and certificates' signatures\n");
+    (void) printf("Verifying message and certificates' signatures\n");
     result = smp_verifySignatures(smp);
     if (result != WS_SUCCESS)
     {
         return result;
     }
 
-    printf("Message is valid\n");
+    (void) printf("Message is valid\n");
     return WS_SUCCESS;
 }
 
@@ -580,12 +583,12 @@ int main (int argc, char *argv[])
     /*
      * Get the library version.
      */
-    printf("\nLibrary version is '%s'\n", securityServices_getVersion());
+    (void) printf("\nLibrary version is '%s'\n", securityServices_getVersion());
 
     /*
      * Initialize security services.
      */
-    printf ("\nInitializing security services\n");
+    (void) printf ("\nInitializing security services\n");
     result = securityServices_initialize();
     if (result != WS_SUCCESS)
     {
@@ -596,7 +599,7 @@ int main (int argc, char *argv[])
     /*
      * Register to receive error and/or status updates
      */
-    printf("Register status callback\n");
+    (void) printf("Register status callback\n");
     result = securityServices_registerReportCallback(
         (uint32_t)(ARIB_SIGNING_CERTIFICATE_STATUS | ARIB_SYSTEM_FILE_STATUS |
                    ARIB_MISBEHAVIOR_PROTECTION_STATUS | ARIB_SCMS_NETWORK_STATUS |
@@ -612,7 +615,7 @@ int main (int argc, char *argv[])
     /*
      * Set the number of leap seconds since 1/1/2004.
      */
-    printf ("Setting leap seconds\n");
+    (void) printf ("Setting leap seconds\n");
     leapSeconds = 5;
     result = securityServices_setTimeAdjustment(leapSeconds);
     if (result != WS_SUCCESS)
@@ -625,7 +628,7 @@ int main (int argc, char *argv[])
     /*
      * Set the current position.
      */
-    printf ("Setting current position\n");
+    (void) printf ("Setting current position\n");
     latitude = 0x323c4650;
     longitude = 0x01020304;
     elevation = 0x0020;
@@ -643,7 +646,7 @@ int main (int argc, char *argv[])
     /*
      * Open application's security context.
      */
-    printf ("Opening security context\n");
+    (void) printf ("Opening security context\n");
     result = sc_open(contextName, &context);
     if (result != WS_SUCCESS)
     {
@@ -668,13 +671,13 @@ int main (int argc, char *argv[])
             return result;
         }
 
-        printf("Security context name is '%s'\n", name);
+        (void) printf("Security context name is '%s'\n", name);
     }
 
     /*
      * Create Secured Message Generator.
      */
-    printf ("Creating a secured message generator\n");
+    (void) printf ("Creating a secured message generator\n");
     result = smg_new(context, &smg);
     if (result != WS_SUCCESS)
     {
@@ -687,7 +690,7 @@ int main (int argc, char *argv[])
     /*
      * Create Secured Message Parser.
      */
-    printf ("Creating a secured message parser\n");
+    (void) printf ("Creating a secured message parser\n");
     result = smp_new(context, &smp);
     if (result != WS_SUCCESS)
     {
@@ -706,40 +709,40 @@ int main (int argc, char *argv[])
     if (userProvidedSspLength > 0)
     {
         sspLength = userProvidedSspLength;
-        memcpy(sspValue, userProvidedSspValue, userProvidedSspLength);
+        (void) memcpy(sspValue, userProvidedSspValue, userProvidedSspLength);
     }
 
     else
     {
         sspLength = ieeeSspLength;
-        memcpy(sspValue, ieeeSsp, ieeeSspLength);
+        (void) memcpy(sspValue, ieeeSsp, ieeeSspLength);
     }
 
     if (userProvidedSspMaskLength > 0)
     {
         sspMaskLength = userProvidedSspMaskLength;
-        memcpy(sspMaskValue, userProvidedSspMaskValue, userProvidedSspMaskLength);
+        (void) memcpy(sspMaskValue, userProvidedSspMaskValue, userProvidedSspMaskLength);
     }
 
     else
     {
         sspMaskLength = ieeeSspMaskLength;
-        memcpy(sspMaskValue, ieeeSspMask, ieeeSspMaskLength);
+        (void) memcpy(sspMaskValue, ieeeSspMask, ieeeSspMaskLength);
     }
 
-    printf("\nSigning permissions: psid = 0x%02x, ssp = ", psidValue);
+    (void) printf("\nSigning permissions: psid = 0x%02x, ssp = ", psidValue);
     for (size_t j = 0; j < sspLength; ++j)
     {
-        printf("0x%02x ", sspValue[j]);
+        (void) printf("0x%02x ", sspValue[j]);
     }
 
     if(sspMaskLength > 0)
     {
-        printf("sspMask = ");
+        (void) printf("sspMask = ");
 
         for (size_t k = 0; k < sspMaskLength; ++k)
         {
-            printf("0x%02x ", sspMaskValue[k]);
+            (void) printf("0x%02x ", sspMaskValue[k]);
         }
     }
 
@@ -747,7 +750,7 @@ int main (int argc, char *argv[])
      * Generate signed message.
     */
 
-    printf("\nSigning the message\n");
+    (void) printf("\nSigning the message\n");
     SigningPermissions permissions;
     setPermissions(&permissions, psidValue, sspValue, (sspMaskLength > 0) ? sspMaskValue : NULL, sspLength);
     result = smg_sign(smg,
@@ -772,7 +775,7 @@ int main (int argc, char *argv[])
     }
     else
     {
-        printf("Signed message generated correctly\n");
+        (void) printf("Signed message generated correctly\n");
     }
 
     if (printMessage)
@@ -813,21 +816,21 @@ int main (int argc, char *argv[])
     if (! ((receivedMessage >= signedMessage) &&
            (receivedMessage <= (signedMessage+signedMessageLength))))
     {
-        printf("Returned payload is not within the original message\n");
+        (void) printf("Returned payload is not within the original message\n");
     }
 
-    printf("\nCleaning up\n");
+    (void) printf("\nCleaning up\n");
 
     /* Delete secured message generator. */
-    printf("Deleting secured message generator\n");
+    (void) printf("Deleting secured message generator\n");
     smg_delete(smg);
 
     /* Delete secured message parser. */
-    printf("Deleting secured message parser\n");
+    (void) printf("Deleting secured message parser\n");
     smp_delete(smp);
 
     /* Close security context. */
-    printf("Closing security context\n");
+    (void) printf("Closing security context\n");
     result = sc_close(context);
     if (result != WS_SUCCESS)
     {
@@ -838,7 +841,7 @@ int main (int argc, char *argv[])
 
 
     /* Unregister status callback. */
-    printf("unregister status callback\n");
+    (void) printf("unregister status callback\n");
     result = securityServices_unRegisterReportCallback();
     if (result != WS_SUCCESS)
     {
@@ -847,14 +850,14 @@ int main (int argc, char *argv[])
     }
 
     /* Shutdown security services. */
-    printf("Shutting down security services\n");
+    (void) printf("Shutting down security services\n");
     result = securityServices_shutdown();
     if (result != WS_SUCCESS)
     {
         LOG("Error shutting down security services", result);
         return result;
     }
-    printf("\n");
+    (void) printf("\n");
 
     return WS_SUCCESS;
 }
